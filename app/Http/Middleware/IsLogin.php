@@ -12,7 +12,7 @@ class IsLogin
         if (session()->get('user')){
             return $next($request);
         }else{
-            return redirect('admin/login')->with('errors','请先登录');
+            return redirect('login')->with('errors','请先登录');
         }
     }
 }

@@ -34,6 +34,7 @@ class LoginController extends Controller
     {
 
         $formDate = request()->except('_token');
+
         //验证规则
         $rule = [
             'username' => 'required',

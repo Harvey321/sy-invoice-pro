@@ -118,12 +118,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
     Route::any('/permission/update', 'PermissionController@update');//权限修改
 
     //产品路由
-    Route::any('/product', 'ProductController@index');//权限列表页
-    Route::any('/product/add', 'ProductController@add');//权限添加页
-    Route::any('/product/create', 'ProductController@create');//权限添加
-    Route::any('/product/delete', 'ProductController@delete');//权限删除
-    Route::any('/product/edit', 'ProductController@edit');//权限修改页
-    Route::any('/product/update', 'ProductController@update');//权限修改
+    Route::any('/product', 'ProductController@index');//产品列表页
+    Route::any('/product/add', 'ProductController@add');//产品添加页
+    Route::any('/product/create', 'ProductController@create');//产品添加
+    Route::any('/product/delete', 'ProductController@delete');//产品删除
+    Route::any('/product/edit', 'ProductController@edit');//产品修改页
+    Route::any('/product/update', 'ProductController@update');//产品修改
 
     //客户路由
     Route::any('/customer', 'CustomerController@index');//后台客户列表页
@@ -138,5 +138,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
     Route::any('/purchased/delete/{id}', 'CustomerController@purchasedDelete');//客户已购产品删除
     Route::any('/purchased/add/{id}', 'CustomerController@purchasedAdd');//客户已购产品添加
     Route::any('/purchased/create', 'CustomerController@purchasedCreate');//客户已购产品添加方法
+
+    
+    //发票路由
+    Route::any('/invoice', 'InvoiceController@index');//发票列表页
+    Route::any('/invoice/add', 'InvoiceController@add');//发票添加页
+    Route::any('/invoice/create', 'InvoiceController@create');//发票添加
+    Route::any('/invoice/delete', 'InvoiceController@delete');//发票删除
+    Route::any('/invoice/edit', 'InvoiceController@edit');//发票修改页
+    Route::any('/invoice/update', 'InvoiceController@update');//发票修改
+
+
 });
 

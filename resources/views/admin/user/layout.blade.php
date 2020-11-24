@@ -174,7 +174,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview">
+                    <!-- <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
@@ -216,6 +216,29 @@
                                 <a href="/admin/product/add" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>添加产品</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li> -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-dolly-flatbed"></i>
+                            <p>
+                                发票管理
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/admin/invoice" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>查看发票</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/invoice/add" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>添加发票</p>
                                 </a>
                             </li>
                         </ul>

@@ -359,4 +359,48 @@ INSERT INTO `user_role` VALUES (1151, 1016, '1001');
 INSERT INTO `user_role` VALUES (1152, 1016, '1002');
 INSERT INTO `user_role` VALUES (1153, 1016, '1003');
 
+
+
+
+
+
+
+
+DROP TABLE IF EXISTS `invoice`;
+CREATE TABLE `invoice`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '发票id',
+  `crm_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'crmId',
+  `business_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '业务员',
+  `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '客户名',
+  `ticket_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '开票名',
+  `tax_num` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '税号',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '地址',
+  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '电话',
+  `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '金额',
+  `ticket_month` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '开票月份',
+  `ticket_day` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '开始日',
+  `status` int(11) NOT NULL DEFAULT 10 COMMENT '10发票正常/90发票作废',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
+  `updated_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1004 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发票表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `invoice` VALUES (1001, '00E0671C95BA', '业务员1', '客户名1', '上海盈众科技技术有限公司', 'E33A6E0BD681', '上海市静安区三泉路156号', '021-66245456','500000','2018-09-21','2019-10-11', 10, '2020-07-17 06:51:58', '2020-11-18 09:41:52');
+INSERT INTO `invoice` VALUES (1002, '01E0671C95BA', '业务员2', '客户名2', '上海中泰科技技术有限公司', 'E53A6E0BD681', '上海市静安区三泉路158号', '021-66245436','99999','2018-09-21','2019-10-11', 10, '2020-07-17 06:51:58', '2020-11-18 09:41:52');
+INSERT INTO `invoice` VALUES (1003, '02E0671C95BA', '业务员3', '客户名3', '上海泰星科技技术有限公司', 'E63A6E0BD681', '上海市静安区三泉路159号', '021-66245486','7789415','2018-09-21','2019-10-11', 10, '2020-07-17 06:51:58', '2020-11-18 09:41:52');
+
+
+
+
+
+
+
+
+
+
+
+
 SET FOREIGN_KEY_CHECKS = 1;
