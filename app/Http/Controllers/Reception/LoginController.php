@@ -31,9 +31,6 @@ class LoginController extends Controller
     {
         $formDate = request()->except('_token','s');
 
-        var_dump($formDate)
-        die;
-
         if (empty($formDate['username'])) {
             return ['status'=>'0','message'=>'请输入用户名'];
         }

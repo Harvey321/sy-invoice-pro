@@ -14,47 +14,78 @@
                     <div class="card-body">
                         {{csrf_field()}}
                         <div class="form-group">
-                            <label for="exampleInputEmail1">发票id/序列号:</label>
-                            <input type="text" id="sn" name="sn" value="{{$data->sn}}"
-                                   class="form-control" placeholder="请输入发票序列号" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">crmID:</label>
+                            <input type="text" id="crm_id" name="crm_id" value="{{$data->crm_id}}"
+                                   class="form-control" placeholder="请输入crmID" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">发票名:</label>
-                            <input type="text" id="invoice_name" name="invoice_name" value="{{$data->invoice_name}}"
-                                   class="form-control" placeholder="请输入发票名称" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">业务员:</label>
+                            <input type="text" id="business_name" name="business_name" value="{{$data->business_name}}"
+                                   class="form-control" placeholder="请输入业务员" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">设备型号:</label>
-                            <input type="text" id="model" name="model" value="{{$data->model}}"
-                                   class="form-control" placeholder="请输入设备型号" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">客户名:</label>
+                            <input type="text" id="customer_name" name="customer_name" value="{{$data->customer_name}}"
+                                   class="form-control" placeholder="请输入客户名" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">安装地:</label>
+                            <label for="exampleInputEmail1">开票名:</label>
+                            <input type="text" id="ticket_name" name="ticket_name" value="{{$data->ticket_name}}"
+                                   class="form-control" placeholder="请输入开票名" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">税号:</label>
+                            <input type="text" id="tax_num" name="tax_num" value="{{$data->tax_num}}"
+                                   class="form-control" placeholder="请输入税号" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">地址:</label>
                             <input type="text" id="address" name="address" value="{{$data->address}}"
-                                   class="form-control" placeholder="请输入安装地" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入地址" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">带宽:</label>
-                            <input type="text" id="rate" name="rate" value="{{$data->rate}}"
-                                   class="form-control" placeholder="请输入带宽" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">电话:</label>
+                            <input type="text" id="mobile" name="mobile" value="{{$data->mobile}}"
+                                   class="form-control" placeholder="请输入电话" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">ip:</label>
-                            <input type="text" id="ip" name="ip" value="{{$data->ip}}"
-                                   class="form-control" placeholder="例:eth0:192.168.0.1,eth3:192.168.1.1" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">金额:</label>
+                            <input type="text" id="money" name="money" value="{{$data->money}}"
+                                   class="form-control" placeholder="请输入金额" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">备注:</label>
-                            <input type="text" id="description" name="description" value="{{$data->description}}"
-                                   class="form-control" placeholder="请输入备注信息" maxlength="240" onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">开票月份:</label>
+                            <div class="input-group date" id="reservationdate-month" data-date-format="yyyy-mm">
+                                <input class='input-group date form-control datetimepicker-input input-group-append'
+                                       placeholder="请输入开票月份"
+                                       type="month" name="ticket_month" id="ticket_month" value="{{$data->ticket_month}}"/>
+                            </div>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">开始日:</label>
+                            <div class="input-group date" id="reservationdate" data-date-format="yyyy-mm-dd">
+                                <input class='input-group date form-control datetimepicker-input input-group-append'
+                                       placeholder="请输入开始日"
+                                       type="date" name="ticket_day" id="ticket_day" value="{{$data->ticket_day}}"/>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">状态</label>
                             <select name="status" id="status" class="form-control">
                                 <option value="10" {{$data->status == 10 ? 'selected' : ''}}>正常使用</option>
-                                <option value="90" {{$data->status == 90 ? 'selected' : ''}}>已注销</option>
+                                <option value="90" {{$data->status == 90 ? 'selected' : ''}}>已作废</option>
                             </select>
                         </div>
+
                         <input type="hidden" name="id" value="{{$data->id}}">
                     </div>
 
@@ -76,11 +107,11 @@
         function dataUpdate(id){
             let data = $('form').serializeArray();
 
-            //表单验证
-            let res = formVerification()
-            if (res == false) {
-                return false;
-            }
+            // //表单验证
+            // let res = formVerification()
+            // if (res == false) {
+            //     return false;
+            // }
 
             $.ajax({
                 type: "post",

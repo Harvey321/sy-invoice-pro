@@ -95,7 +95,7 @@
                 if (data.status == 'success') {
                     toastr.success(data.message);
                     // console.log(window.location.pathname + "/admin/user")
-                    window.location.href = "/admin/user";
+                    window.location.href = "/admin/invoice";
                 }
                 if (data.status == 'error') {
                     toastr.error(data.message);

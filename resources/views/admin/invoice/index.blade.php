@@ -54,7 +54,9 @@
                                     <th class="none">开始日</th>
                                     <th class="none">状态</th>
                                     <th class="none">创建时间</th>
-                                    <th class="none">操作</th>
+                                    @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))
+                                        <th class="none">操作</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -75,18 +77,20 @@
                                             {{$item->status == 10? '状态正常': '发票作废'}}
                                         </td>
                                         <td>{{$item->created_at}}</td>
-                                        <td style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
-                                            <a href="/admin/invoice/edit?id={{$item->id}}"
-                                               class="btn btn-block bg-gradient-primary btn-xs"
-                                               style="margin-right:4px;margin-top:5px;max-width: 100px;min-width: 80px;">编辑
-                                            </a>
-                                            <a href="" onclick="setDelUrl({{$item->id}})"
-                                               class="btn btn-block bg-gradient-danger btn-xs"
-                                               data-toggle="modal" data-target="#modal-sm"
-                                               data-orderId="{{$item->id}}"
-                                               style="margin-top:5px;max-width: 100px;min-width: 80px;">删除
-                                            </a>
-                                        </td>
+                                        @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))
+                                            <td style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                                                <a href="/admin/invoice/edit?id={{$item->id}}"
+                                                   class="btn btn-block bg-gradient-primary btn-xs"
+                                                   style="margin-right:4px;margin-top:5px;max-width: 100px;min-width: 80px;">编辑
+                                                </a>
+                                                <a href="" onclick="setDelUrl({{$item->id}})"
+                                                   class="btn btn-block bg-gradient-danger btn-xs"
+                                                   data-toggle="modal" data-target="#modal-sm"
+                                                   data-orderId="{{$item->id}}"
+                                                   style="margin-top:5px;max-width: 100px;min-width: 80px;">删除
+                                                </a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 

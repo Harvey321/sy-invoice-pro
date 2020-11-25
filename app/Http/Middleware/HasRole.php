@@ -21,6 +21,8 @@ class HasRole
         //获取用户的权限组
         $user = User::find(session()->get('user')->id);
 
+
+
         //获取当前用户的角色组
         $roles = $user->role;
 
@@ -33,7 +35,10 @@ class HasRole
             }
         }
 
+
         $arr = array_unique($arr); //每个角色下的路由可能重复需要去重
+
+        session()->put('permission',$arr);
 
         if (in_array($route,$arr)){
             return $next($request);

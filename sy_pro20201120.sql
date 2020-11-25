@@ -140,6 +140,13 @@ INSERT INTO `permission` VALUES (1037, '客户已购产品修改页', 'App\\Http
 INSERT INTO `permission` VALUES (1038, '客户已购产品删除', 'App\\Http\\Controllers\\Admin\\CustomerController@purchasedDelete', 10);
 INSERT INTO `permission` VALUES (1039, '客户已购产品修改', 'App\\Http\\Controllers\\Admin\\CustomerController@purchasedUpdate', 10);
 INSERT INTO `permission` VALUES (1040, '客户已购产品添加方法', 'App\\Http\\Controllers\\Admin\\CustomerController@purchasedCreate', 10);
+INSERT INTO `permission` VALUES (1041, '发票列表页', 'App\\Http\\Controllers\\Admin\\InvoiceController@index', 10);
+INSERT INTO `permission` VALUES (1042, '发票添加页', 'App\\Http\\Controllers\\Admin\\InvoiceController@add', 10);
+INSERT INTO `permission` VALUES (1043, '发票添加', 'App\\Http\\Controllers\\Admin\\InvoiceController@create', 10);
+INSERT INTO `permission` VALUES (1044, '发票删除', 'App\\Http\\Controllers\\Admin\\InvoiceController@delete', 10);
+INSERT INTO `permission` VALUES (1045, '发票修改页', 'App\\Http\\Controllers\\Admin\\InvoiceController@edit', 10);
+INSERT INTO `permission` VALUES (1046, '发票修改', 'App\\Http\\Controllers\\Admin\\InvoiceController@update', 10);
+
 
 -- ----------------------------
 -- Table structure for product

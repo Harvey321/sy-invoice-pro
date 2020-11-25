@@ -28,7 +28,7 @@
 {{--    <script src="/admin/plugins/daterangepicker/bootstrap-datetimepicker.js"></script>--}}
 {{--    <script src="/admin/plugins/daterangepicker/bootstrap-datetimepicker.zh-CN.js"></script>--}}
 
-    <!-- daterangepicker -->
+<!-- daterangepicker -->
     <script src="/admin/plugins/moment/moment.min.js"></script>
     <!-- 日期范围选取器 -->
     <link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
@@ -43,9 +43,9 @@
 
 
     <!-- 警报 -->
-{{--    <link rel="stylesheet" href="/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">--}}
+    {{--    <link rel="stylesheet" href="/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">--}}
 
-    <!-- iCheck -->
+<!-- iCheck -->
     {{--    <link rel="stylesheet" href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">--}}
 <!-- JQVMap -->
     {{--    <link rel="stylesheet" href="/admin/plugins/jqvmap/jqvmap.min.css">--}}
@@ -85,10 +85,6 @@
 
     <!-- 左侧菜单 -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="index3.html" class="brand-link">
-            <img src="/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-            <span class="brand-text font-weight-light">双于项目logo</span>
-        </a>
 
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -104,77 +100,86 @@
                 <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-legacy" data-widget="treeview"
                     role="menu"
                     data-accordion="false">
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p>
-                                用户管理
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/admin/user" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>查看用户</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/user/add" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>添加用户</p>
-                                </a>
-                            </li>
+                    @if(in_array('App\Http\Controllers\Admin\UserController@index',session()->get('permission')))
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    用户管理
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/user" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>查看用户</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/user/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>添加用户</p>
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user-circle"></i>
-                            <p>
-                                角色管理
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/admin/role" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>查看角色</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/role/add" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>添加角色</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-project-diagram"></i>
-                            <p>
-                                权限管理
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/admin/permission" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>查看权限</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/permission/add" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>添加权限</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- <li class="nav-item has-treeview">
+                            </ul>
+                        </li>
+                    @endif
+
+                    @if(in_array('App\Http\Controllers\Admin\RoleController@index',session()->get('permission')))
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user-circle"></i>
+                                <p>
+                                    角色管理
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/role" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>查看角色</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/role/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>添加角色</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+
+                    @if(in_array('App\Http\Controllers\Admin\PermissionController@index',session()->get('permission')))
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-project-diagram"></i>
+                                <p>
+                                    权限管理
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/permission" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>查看权限</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/permission/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>添加权限</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                @endif
+
+                <!-- <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
@@ -235,12 +240,14 @@
                                     <p>查看发票</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="/admin/invoice/add" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>添加发票</p>
-                                </a>
-                            </li>
+                            @if(in_array('App\Http\Controllers\Admin\InvoiceController@add',session()->get('permission')))
+                                <li class="nav-item">
+                                    <a href="/admin/invoice/add" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>添加发票</p>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                 </ul>

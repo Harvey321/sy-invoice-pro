@@ -16,56 +16,68 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">crmID:</label>
                             <input type="text" id="crm_id" name="crm_id" value=""
-                                   class="form-control" placeholder="请输入crmID" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入crmID" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">业务员:</label>
                             <input type="text" id="business_name" name="business_name" value=""
-                                   class="form-control" placeholder="请输入业务员" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入业务员" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">客户名:</label>
                             <input type="text" id="customer_name" name="customer_name" value=""
-                                   class="form-control" placeholder="请输入客户名" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入客户名" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">开票名:</label>
                             <input type="text" id="ticket_name" name="ticket_name" value=""
-                                   class="form-control" placeholder="请输入开票名" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入开票名" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">税号:</label>
                             <input type="text" id="tax_num" name="tax_num" value=""
-                                   class="form-control" placeholder="请输入税号" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入税号" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">地址:</label>
                             <input type="text" id="address" name="address" value=""
-                                   class="form-control" placeholder="请输入地址" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入地址" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">电话:</label>
                             <input type="text" id="mobile" name="mobile" value=""
-                                   class="form-control" placeholder="请输入电话" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入电话" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">金额:</label>
                             <input type="text" id="money" name="money" value=""
-                                   class="form-control" placeholder="请输入金额" maxlength="100" onkeyup="this.value=this.value.trim()">
+                                   class="form-control" placeholder="请输入金额" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">开票月份:</label>
-                            <input type="text" id="ticket_month" name="ticket_month" value=""
-                                   class="form-control" placeholder="请输入开票月份" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <div class="input-group date" id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                <input class='input-group date form-control datetimepicker-input input-group-append'
+                                       placeholder="请输入开票月份"
+                                       type="month" name="ticket_month" id="ticket_month" value=""/>
+                            </div>
                         </div>
-                        
                         <div class="form-group">
                             <label for="exampleInputEmail1">开始日:</label>
-                            <input type="text" id="ticket_day" name="ticket_day" value=""
-                                   class="form-control" placeholder="请输入开始日" maxlength="100" onkeyup="this.value=this.value.trim()">
+                            <div class="input-group date" id="reservationdate" data-date-format="yyyy-mm">
+                                <input class='input-group date form-control datetimepicker-input input-group-append'
+                                       placeholder="请输入开始日"
+                                       type="date" name="ticket_day" id="ticket_day" value=""/>
+                            </div>
                         </div>
                     </div>
-   
                     <div class="card-footer"
                          style="display: flex;flex-direction: row;justify-content: space-around">
                         <div id="getDate" class="btn btn-block btn-primary">提交</div>
@@ -81,7 +93,6 @@
 
 
     <script type="text/javascript">
-
         $("#getDate").click(function () {
             //表单验证
             // let res = formVerification()
