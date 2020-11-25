@@ -29,13 +29,14 @@ Route::group(['middleware' => ['customerIsLogin',]], function () {
 
 
 
+
+Route::any('/login', 'Admin\LoginController@index');
+
 //官网路由
 Route::prefix('/')->group(function () {
 
 //走进双于
-    Route::get('/', function () {
-        return view('officialWeb.index');
-    });
+    Route::get('/', 'Admin\InvoiceController@index');
 
 
 //产品及解决方案

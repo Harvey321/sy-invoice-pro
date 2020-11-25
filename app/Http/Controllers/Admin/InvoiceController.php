@@ -14,6 +14,10 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
+        if (!isset(session()->get('user')->id)) {
+            return redirect('admin/login')->with('errors', '请先登录');
+        }
+
         $dataList = Invoice::orderBy('id', 'DESC')->get();
 
         return view(
@@ -38,7 +42,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $formData = request()->except(['_token','s']);
+        $formData = request()->except(['_token', 's']);
 
         //保存发票信息
         $obj = new Invoice();
