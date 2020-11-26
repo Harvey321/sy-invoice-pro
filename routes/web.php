@@ -149,6 +149,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
     Route::any('/invoice/edit', 'InvoiceController@edit');//发票修改页
     Route::any('/invoice/update', 'InvoiceController@update');//发票修改
 
+    Route::any('/invoice/ExcelGet', 'InvoiceController@ExcelGet');//导出发票信息
+
+
+
 
 });
 

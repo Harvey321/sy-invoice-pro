@@ -66,7 +66,7 @@
                             <div class="input-group date" id="reservationdate-month" data-date-format="yyyy-mm">
                                 <input class='input-group date form-control datetimepicker-input input-group-append'
                                        placeholder="请输入开票月份"
-                                       type="month" name="ticket_month" id="ticket_month" value="{{$data->ticket_month}}"/>
+                                       type="month" name="ticket_month" id="ticket_month" value="{{ date('Y-m',$data->ticket_month) }}"/>
                             </div>
                         </div>
                         <div class="form-group">

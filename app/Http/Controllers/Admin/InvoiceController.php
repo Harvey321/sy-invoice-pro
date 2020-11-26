@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Model\Invoice;
 use Illuminate\Http\Request;
-
+//use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -18,13 +19,47 @@ class InvoiceController extends Controller
             return redirect('admin/login')->with('errors', '请先登录');
         }
 
-        $dataList = Invoice::orderBy('id', 'DESC')->get();
+
+//        if (request()->isMethod('POST')) {
+//            //搜索提交处理
+//            //高级搜索
+//            $data = request()->all();
+//            $query = CMSCI::where('id', '<>', NULL);
+//            if (isset(request()->querywords)) {
+//                $query = CMSCI::where(
+//                    'name',
+//                    'like',
+//                    '%' . Input::get('querywords') . '%'
+//                )->orWhere('code', 'like', '%'.Input::get('querywords').'%');
+//            }
+//            if (isset($data['owner_org'])) {
+//                $query = $query->where('owner_org', $data['owner_org']);
+//            }
+
+//        dd(strtotime('2020-10'));
+
+
+        $query = Invoice::orderBy('id', 'DESC');
+
+        if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
+            $month_old = strtotime($request->all()['month_old']);
+            $month_new = strtotime($request->all()['month_new']);
+        } else {
+            $month_old = strtotime('-1 month');
+            $month_new = strtotime('0 month');
+        }
+
+        $dataList = $query
+            ->whereBetween('ticket_month', [$month_old, $month_new])
+            ->get();
 
         return view(
             'admin.invoice.index',
             [
                 'title' => '发票列表',
                 'dataList' => $dataList,
+                'month_old' => $month_old,
+                'month_new' => $month_new,
             ]
         );
     }
@@ -54,7 +89,7 @@ class InvoiceController extends Controller
         $obj->address = $formData['address'];
         $obj->mobile = $formData['mobile'];
         $obj->money = $formData['money'];
-        $obj->ticket_month = $formData['ticket_month'];
+        $obj->ticket_month = strtotime($formData['ticket_month']);
         $obj->ticket_day = $formData['ticket_day'];
         $res = $obj->save();
 
@@ -114,6 +149,7 @@ class InvoiceController extends Controller
     public function update()
     {
         $formData = request()->except('_token', 's');
+        $formData['ticket_month'] = strtotime($formData['ticket_month']);
 
         $res = Invoice::where('id', $formData['id'])->update($formData);
 
@@ -124,6 +160,55 @@ class InvoiceController extends Controller
         }
 
         return $data;
+    }
+
+    /**
+     * 导出excel数据
+     * @param $title
+     * @param $list
+     * @param $width
+     */
+    public function exportExcel($title, $list)
+    {
+        Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
+            $excel->sheet('score', function ($sheet) use ($list) {
+                $sheet->rows($list);
+            });
+        })->export('xls');
+    }
+
+    public function ExcelGet(Request $request)
+    {
+        $query = Invoice::orderBy('id', 'DESC');
+
+        if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
+            $month_old = strtotime($request->all()['month_old']);
+            $month_new = strtotime($request->all()['month_new']);
+        } else {
+            $month_old = strtotime('-1 month');
+            $month_new = strtotime('0 month');
+        }
+
+        $dataList = $query
+            ->whereBetween('ticket_month', [$month_old, $month_new])
+            ->get();
+
+        $dataList = json_decode(json_encode($dataList), true);
+
+        foreach ($dataList as $key => $value) {
+            foreach ($value as $k => $v) {
+                $value[$k] = "\t" . $v . "\t";
+            }
+            $dataList[$key] = $value;
+        }
+
+        $arr = ['ID', 'crdID', '业务员', '客户名', '开票名', '税号', '地址', '电话', '金额', '开票月份', '终止日', '状态', '创建时间', '更新时间'];
+
+        array_unshift($dataList, $arr);
+
+        $title = date('Y-m', $month_old) . '-' . date('Y-m', $month_new) . '订单数据表';
+
+        self::exportExcel($title, $dataList);
     }
 
 }
