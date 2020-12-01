@@ -1,6 +1,10 @@
 @extends('admin.user.layout')
 @section('content-wrapper')
-
+    <style>
+        .button-left-margin {
+            margin-left: 10px;
+        }
+    </style>
     <!-- 标题栏 -->
     <section class="content-header">
         <!-- 模态框  -->
@@ -36,29 +40,14 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">发票列表</h3>
-                            <div>
-
-                            </div>
                         </div>
                         <div class="card-header">
-                            {{--                            <div class="input-group">--}}
-                            {{--                                <div class="input-group-prepend">--}}
-                            {{--                                  <span class="input-group-text">--}}
-                            {{--                                    <i class="far fa-calendar-alt"></i>--}}
-                            {{--                                  </span>--}}
-                            {{--                                </div>--}}
-                            {{--                                <input type="text" class="form-control float-right" id="reservation">--}}
-                            {{--                            </div>--}}
-
                             <div class="row">
-                                <div class="col-1 d-flex flex-row justify-content-center align-items-center">
-                                    <b>查询日期范围:</b>
-                                </div>
-                                <div class="col-4">
-
+                                <div class="col-10">
                                     <form action="/" method="get">
-                                        <div class="input-group date" id="reservationdate-month"
-                                             data-date-format="yyyy-mm-dd">
+                                        <div class="input-group date d-flex flex-row align-items-center"
+                                             id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                            <label style="margin-right:20px;">查询范围:</label>
                                             <input class='input-group date form-control datetimepicker-input input-group-append'
                                                    placeholder="请输入开票月份" style="width: 250px!important;"
                                                    type="month" name="month_old" id="month_old"
@@ -67,11 +56,16 @@
                                                    placeholder="请输入开票月份" style="width: 250px"
                                                    type="month" name="month_new" id="month_new"
                                                    value="{{isset($month_new) == true ? date('Y-m',$month_new) : date('Y-m',strtotime('0 month'))}}"/>
-                                            <button class="btn btn-default" href="/">搜索</button>
+
+                                            <button class="btn btn-default button-left-margin" href="/">搜索</button>
+                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m').'&month_new='.date('Y-m')}}">当前月</a>
+                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m', strtotime("-2 month")).'&month_new='.date('Y-m')}}">近三月</a>
+                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m', strtotime("-5 month")).'&month_new='.date('Y-m')}}">近半年</a>
+                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m', strtotime("-11 month")).'&month_new='.date('Y-m')}}">近一年</a>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="col-7 d-flex flex-row justify-content-end">
+                                <div class="col-2 d-flex flex-row justify-content-end">
                                     <button class="btn btn-info"><a onclick="getUrl()">导出当前票据</a></button>
                                 </div>
                             </div>
@@ -90,7 +84,7 @@
                                     <th>电话</th>
                                     <th>金额</th>
                                     <th>开票月份</th>
-                                    <th>终止日</th>
+                                    <th>到期日</th>
                                     <th>状态</th>
                                     <th>创建时间</th>
                                     @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))
@@ -145,7 +139,7 @@
     </section>
 
     <script>
-        function getUrl(){
+        function getUrl() {
             let href = '/admin/invoice/ExcelGet' + window.location.search;
             window.location = href;
         }
