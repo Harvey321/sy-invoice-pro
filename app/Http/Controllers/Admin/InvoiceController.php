@@ -208,4 +208,11 @@ class InvoiceController extends Controller
         self::exportExcel($title, $dataList);
     }
 
+
+    function planTask()
+    {
+        var_dump(Invoice::all());
+    }
+
+
 }
