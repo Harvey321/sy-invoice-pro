@@ -77,28 +77,25 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $formData = request()->except(['_token', 's']);
+        $formData = request()->except(['_token', 's', 'year', 'month']);
+        $formData['yearMonth'] = explode(',', $formData['yearMonth']);
 
-        //保存发票信息
-        $obj = new Invoice();
-        $obj->crm_id = $formData['crm_id'];
-        $obj->business_name = $formData['business_name'];
-        $obj->customer_name = $formData['customer_name'];
-        $obj->ticket_name = $formData['ticket_name'];
-        $obj->tax_num = $formData['tax_num'];
-        $obj->address = $formData['address'];
-        $obj->mobile = $formData['mobile'];
-        $obj->money = $formData['money'];
-        $obj->ticket_month = strtotime($formData['ticket_month']);
-        $obj->ticket_day = $formData['ticket_day'];
-        $res = $obj->save();
-
-        if ($res) {
-            $data = ['status' => 1, 'message' => '发票添加成功'];
-        } else {
-            $data = ['status' => 0, 'message' => '发票添加失败'];
+        for ($i = 0; count($formData['yearMonth']) > $i; $i++) {
+            //保存发票信息
+            $obj = new Invoice();
+            $obj->crm_id = $formData['crm_id'];
+            $obj->business_name = $formData['business_name'];
+            $obj->customer_name = $formData['customer_name'];
+            $obj->ticket_name = $formData['ticket_name'];
+            $obj->tax_num = $formData['tax_num'];
+            $obj->address = $formData['address'];
+            $obj->mobile = $formData['mobile'];
+            $obj->money = $formData['money'];
+            $obj->ticket_day = $formData['ticket_day'];
+            $obj->ticket_month = strtotime($formData['yearMonth'][$i]);
+            $obj->save();
         }
-        return $data;
+        return ['status' => 1, 'message' => '发票添加成功'];
     }
 
     /**
@@ -202,7 +199,7 @@ class InvoiceController extends Controller
             $dataList[$key] = $value;
         }
 
-        $arr = ['ID', 'crdID', '业务员', '客户名', '开票名', '税号', '地址', '电话', '金额', '开票月份', '终止日', '状态', '创建时间', '更新时间'];
+        $arr = Invoice::$field;
 
         array_unshift($dataList, $arr);
 

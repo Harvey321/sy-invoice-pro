@@ -38,4 +38,24 @@ class Invoice extends Model
         'updated_at'
     ];
 
+    //字段名
+    public static $field = [
+        'ID',
+        'crdID',
+        '业务员',
+        '客户名',
+        '开票名',
+        '税号',
+        '地址',
+        '电话',
+        '金额',
+        '开票月份',
+        '终止日',
+        '状态',
+        '创建时间',
+        '更新时间'
+    ];
+
+
+
 }
