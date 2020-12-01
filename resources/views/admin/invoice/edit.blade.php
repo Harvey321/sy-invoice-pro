@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">开始日:</label>
+                            <label for="exampleInputEmail1">终止日:</label>
                             <div class="input-group date" id="reservationdate" data-date-format="yyyy-mm-dd">
                                 <input class='input-group date form-control datetimepicker-input input-group-append'
                                        placeholder="请输入开始日"

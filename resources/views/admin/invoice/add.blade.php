@@ -98,7 +98,7 @@
 
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">开始日:</label>
+                            <label for="exampleInputEmail1">终止日:</label>
                             <div class="input-group date" id="reservationdate" data-date-format="yyyy-mm">
                                 <input class='input-group date form-control datetimepicker-input input-group-append'
                                        placeholder="请输入开始日"
@@ -216,9 +216,9 @@
                 );
             }
             //清理月份框
-            let boxList = $('.box-card');
+            let boxList = $('.box-card');//获取所有的月份框
             for (let x = 0; boxList.length > x; x++) {
-                $(boxList[x]).bind('click',function () {
+                $(boxList[x]).bind('click', function () {//绑定点击移除事件
                     this.remove()
                 })
             }
