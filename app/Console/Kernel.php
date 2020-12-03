@@ -26,10 +26,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//        $schedule->call(
-//            'App\Http\Controllers\Admin\TaskController@planTask'
-//        )->everyMinute();
-        $schedule->command('lesson:log')->everyMinute();
+        $schedule->call(
+            'App\Http\Controllers\Admin\TaskController@planTask'
+        )->everyMinute();
+//        $schedule->command('lesson:log')->everyMinute();
     }
 
     /**
