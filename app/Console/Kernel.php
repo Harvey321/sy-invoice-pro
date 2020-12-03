@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\LogInfo::class,
     ];
 
     /**
@@ -29,6 +29,8 @@ class Kernel extends ConsoleKernel
         $schedule->call(
             'App\Http\Controllers\Admin\TaskController@planTask'
         )->everyMinute();
+
+        $schedule->command('lesson:log')->everyMinute();
     }
 
     /**
