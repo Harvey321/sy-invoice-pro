@@ -4,9 +4,12 @@
 Route::any('/code/captcha/{tmp}', 'Admin\LoginController@captcha');
 //无权限页面
 Route::any('/noAccess', 'Admin\LoginController@noAccess');
-Route::any('/testxxx', function (){
-    return view('test');
-});
+
+//邮件发送
+Route::any('/test', 'Admin\TaskController@planTask');
+Route::get('/mail/send','MailController@send');
+
+
 
 
 //前台相关路由
@@ -63,20 +66,9 @@ Route::prefix('/')->group(function () {
         return view('admin-end.404');
     });
 
-
-    Route::get('/test', function () {
-        return view('officialWeb.test');
-    });
-    Route::get('/test2', function () {
-        return view('officialWeb.test2');
-    });
-
-
     //联系我们
     Route::post('/getData', 'OfficialController@getData');
 });
-
-
 
 
 //后台相关路由
@@ -140,7 +132,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
     Route::any('/purchased/add/{id}', 'CustomerController@purchasedAdd');//客户已购产品添加
     Route::any('/purchased/create', 'CustomerController@purchasedCreate');//客户已购产品添加方法
 
-    
+
     //发票路由
     Route::any('/invoice', 'InvoiceController@index');//发票列表页
     Route::any('/invoice/add', 'InvoiceController@add');//发票添加页

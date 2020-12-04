@@ -19,26 +19,6 @@ class InvoiceController extends Controller
             return redirect('admin/login')->with('errors', '请先登录');
         }
 
-
-//        if (request()->isMethod('POST')) {
-//            //搜索提交处理
-//            //高级搜索
-//            $data = request()->all();
-//            $query = CMSCI::where('id', '<>', NULL);
-//            if (isset(request()->querywords)) {
-//                $query = CMSCI::where(
-//                    'name',
-//                    'like',
-//                    '%' . Input::get('querywords') . '%'
-//                )->orWhere('code', 'like', '%'.Input::get('querywords').'%');
-//            }
-//            if (isset($data['owner_org'])) {
-//                $query = $query->where('owner_org', $data['owner_org']);
-//            }
-
-//        dd(strtotime('2020-10'));
-
-
         $query = Invoice::orderBy('id', 'DESC');
 
         if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
@@ -207,23 +187,5 @@ class InvoiceController extends Controller
 
         self::exportExcel($title, $dataList);
     }
-
-
-    function planTask()
-    {
-        $obj = new Invoice();
-        $obj->crm_id = '1111111111111111111';
-        $obj->business_name = '1111111111111111111';
-        $obj->customer_name = '1111111111111111111';
-        $obj->ticket_name = '1111111111111111111';
-        $obj->tax_num = '1111111111111111111';
-        $obj->address = '1111111111111111111';
-        $obj->mobile = '1111111111111111111';
-        $obj->money = '1111111111111111111';
-        $obj->ticket_day = '1111111111111111111';
-        $obj->ticket_month = '1601510400';
-        $obj->save();
-    }
-
 
 }
