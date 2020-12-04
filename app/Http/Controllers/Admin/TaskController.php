@@ -63,7 +63,7 @@ class TaskController extends Controller
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
-        })->store('xls', storage_path('excel/exports'));
+        })->store('xls', storage_path('excel/exports'))->setUseBOM(true);
     }
 
 }
