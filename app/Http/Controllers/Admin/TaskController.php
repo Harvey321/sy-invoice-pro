@@ -37,7 +37,7 @@ class TaskController extends Controller
         self::exportExcel($title, $data);
 
         //获取临时文件地址
-        $temp_address = storage_path('excel\exports') . '\\' . $title . '.xls';
+        $temp_address = storage_path('excel/exports') . '/' . $title . '.xls';
 
         //附件文件名
         $file_name = $title . '.xls';
