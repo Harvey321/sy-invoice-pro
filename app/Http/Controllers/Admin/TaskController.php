@@ -41,7 +41,7 @@ class TaskController extends Controller
 
         //附件文件名
         $file_name = $title . '.xls';
-
+        iconv("utf-8","gb2312",$file_name);
         //发送邮件
         $mail = new MailController();
 
@@ -59,11 +59,11 @@ class TaskController extends Controller
      */
     public function exportExcel($title, $list)
     {
-        Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
+        Excel::create(iconv('UTF-8', 'gb2312', $title), function ($excel) use ($list) {
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
-        })->store('xls', storage_path('excel/exports'))->setUseBOM(true);
+        })->store('xls', storage_path('excel/exports'));
     }
 
 }
