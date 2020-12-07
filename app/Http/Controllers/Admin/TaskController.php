@@ -24,6 +24,8 @@ class TaskController extends Controller
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
+            echo storage_path('excel/exports');
+
         })->store('xls', storage_path('excel/exports'));
         echo 5555;
 
@@ -69,7 +71,7 @@ class TaskController extends Controller
         //发送邮件
         $mail = new MailController();
 echo 6666;
-        $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
+        $mail->send('', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
         echo 7777;
     }
 
