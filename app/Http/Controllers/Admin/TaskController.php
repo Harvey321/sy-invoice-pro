@@ -19,6 +19,7 @@ class TaskController extends Controller
     public function exportExcel($title, $list)
     {
         echo 4444;
+        echo storage_path('excel/exports');
         Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
