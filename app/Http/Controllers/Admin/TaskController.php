@@ -8,8 +8,26 @@ use App\Model\Invoice;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 class TaskController extends Controller
 {
+    /**
+     * 导出excel数据
+     * @param $title
+     * @param $list
+     */
+    public function exportExcel($title, $list)
+    {
+        echo 4444;
+        Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
+            $excel->sheet('score', function ($sheet) use ($list) {
+                $sheet->rows($list);
+            });
+        })->store('xls', storage_path('excel/exports'));
+        echo 5555;
+
+    }
+
     //计划任务每月发送邮件 下月到期合同
     public function planTask()
     {
@@ -49,24 +67,8 @@ class TaskController extends Controller
         iconv("utf-8","gb2312",$file_name);
         //发送邮件
         $mail = new MailController();
-        dd(111);
-
+echo 6666;
         $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
-    }
-
-    /**
-     * 导出excel数据
-     * @param $title
-     * @param $list
-     */
-    public function exportExcel($title, $list)
-    {
-            Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
-            $excel->sheet('score', function ($sheet) use ($list) {
-                $sheet->rows($list);
-            });
-        })->store('xls', storage_path('excel/exports'));
-
     }
 
 }

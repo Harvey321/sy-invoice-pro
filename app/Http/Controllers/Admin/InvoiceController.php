@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Model\Invoice;
 use Illuminate\Http\Request;
-//use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
