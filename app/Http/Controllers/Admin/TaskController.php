@@ -45,10 +45,8 @@ class TaskController extends Controller
         //发送邮件
         $mail = new MailController();
 
-        $res = $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
+        $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
 
-        //记录日志
-        return true;
     }
 
     /**
