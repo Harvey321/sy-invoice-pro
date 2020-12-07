@@ -28,7 +28,6 @@ class TaskController extends Controller
     //计划任务每月发送邮件 下月到期合同
     public function planTask()
     {
-
         //获取需要发送邮件的数据data
         $invoiceList = Invoice::all();
         $data = [];//符合条件的发票
@@ -47,7 +46,7 @@ class TaskController extends Controller
         array_unshift($data, $arr);
 
         //使用数据生成xls     每日一次不用担心文件名重复问题
-        $title = 'Invoice-Email哇哇哇哇' . date('Y-m-d', time());
+        $title = '次月合同期满客户Invoice-Email' . date('Y-m-d', time());
 
         //导出EXcel
         self::exportExcel($title, $data);
@@ -60,7 +59,7 @@ class TaskController extends Controller
 
         //发送邮件
         $mail = new MailController();
-        $mail->send('Invoice-Email哇哇哇哇', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
+        $mail->send('次月合同期满客户Invoice-Email', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
     }
 
 }
