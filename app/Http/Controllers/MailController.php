@@ -28,9 +28,9 @@ class MailController extends Controller
         });
 
         if (empty(Mail::failures())) {
-            return false;
+            echo  'error';
         }
-        return true;
+        echo 'true';
     }
 }
 
