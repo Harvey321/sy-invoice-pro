@@ -33,9 +33,13 @@ class TaskController extends Controller
 
         //使用数据生成xls     每日一次不用担心文件名重复问题
         $title = '次月合同期满客户表' . date('Y-m-d', time());
+        echo 222;
 
         //导出EXcel
         self::exportExcel($title, $data);
+
+        echo 333;
+
 
         //获取临时文件地址
         $temp_address = storage_path('excel/exports') . '/' . $title . '.xls';
@@ -45,6 +49,7 @@ class TaskController extends Controller
         iconv("utf-8","gb2312",$file_name);
         //发送邮件
         $mail = new MailController();
+        dd(111);
 
         $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
     }
