@@ -53,7 +53,7 @@ class TaskController extends Controller
         array_unshift($data, $arr);
 
         //使用数据生成xls     每日一次不用担心文件名重复问题
-        $title = '次月合同期满客户表' . date('Y-m-d', time());
+        $title = '' . date('Y-m-d', time());
         echo 222;
 
         //导出EXcel
