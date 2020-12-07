@@ -143,7 +143,6 @@ class InvoiceController extends Controller
      * 导出excel数据
      * @param $title
      * @param $list
-     * @param $width
      */
     public function exportExcel($title, $list)
     {

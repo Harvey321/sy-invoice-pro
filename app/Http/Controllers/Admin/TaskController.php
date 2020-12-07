@@ -13,6 +13,7 @@ class TaskController extends Controller
     //计划任务每月发送邮件 下月到期合同
     public function planTask()
     {
+
         //获取需要发送邮件的数据data
         $invoiceList = Invoice::all();
         $data = [];//符合条件的发票
@@ -46,22 +47,21 @@ class TaskController extends Controller
         $mail = new MailController();
 
         $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
-
     }
 
     /**
      * 导出excel数据
      * @param $title
      * @param $list
-     * @param $width
      */
     public function exportExcel($title, $list)
     {
-        Excel::create(iconv('UTF-8', 'gb2312', $title), function ($excel) use ($list) {
+            Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
         })->store('xls', storage_path('excel/exports'));
+
     }
 
 }

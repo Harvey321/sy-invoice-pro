@@ -29,7 +29,6 @@ class Kernel extends ConsoleKernel
         $schedule->call(
             'App\Http\Controllers\Admin\TaskController@planTask'
         )->everyMinute();
-//        $schedule->command('lesson:log')->everyMinute();
     }
 
     /**
