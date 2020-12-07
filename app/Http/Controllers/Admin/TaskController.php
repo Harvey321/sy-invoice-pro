@@ -25,7 +25,7 @@ class TaskController extends Controller
         })->store('xls', storage_path('excel/exports'));
     }
 
-    //计划任务每月发送邮件 下月到期合同
+    //计划任务每日发送邮件 下月到期合同
     public function planTask()
     {
         //获取需要发送邮件的数据data
@@ -41,6 +41,9 @@ class TaskController extends Controller
         }
         $data = json_decode(json_encode($data), true);//查询对象转数组
 
+        if (empty($data)){
+            return false;
+        }
         //添加表头
         $arr = Invoice::$field;
         array_unshift($data, $arr);

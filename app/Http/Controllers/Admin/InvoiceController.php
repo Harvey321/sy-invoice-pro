@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MailController;
+use App\Model\Admin\Role;
+use App\Model\Admin\User;
 use App\Model\Invoice;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,6 +22,13 @@ class InvoiceController extends Controller
         }
 
         $query = Invoice::orderBy('id', 'DESC');
+
+        //查询登录用户的信息
+        $user =  User::where('id',session()->get('user')->id)->first();
+
+        if (!empty($user->role[0]['sign']=='business')) {
+            $query->where('business_name',$user->username);
+        }
 
         if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
             $month_old = strtotime($request->all()['month_old']);
@@ -74,6 +84,10 @@ class InvoiceController extends Controller
             $obj->ticket_month = strtotime($formData['yearMonth'][$i]);
             $obj->save();
         }
+
+        $mail = new MailController();
+        $mail->newInvoiceSend('新加入合同发票信息', '604666621@qq.com', '上海双于通信技术有限公司', $formData['business_name'], $formData['crm_id'], $formData['customer_name']);
+
         return ['status' => 1, 'message' => '发票添加成功'];
     }
 
@@ -145,7 +159,7 @@ class InvoiceController extends Controller
      */
     public function exportExcel($title, $list)
     {
-        Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
+        Excel::create(iconv('UTF - 8', 'GBK', $title), function ($excel) use ($list) {
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
@@ -160,7 +174,7 @@ class InvoiceController extends Controller
             $month_old = strtotime($request->all()['month_old']);
             $month_new = strtotime($request->all()['month_new']);
         } else {
-            $month_old = strtotime('-1 month');
+            $month_old = strtotime(' - 1 month');
             $month_new = strtotime('0 month');
         }
 
@@ -181,7 +195,7 @@ class InvoiceController extends Controller
 
         array_unshift($dataList, $arr);
 
-        $title = date('Y-m', $month_old) . '-' . date('Y-m', $month_new) . '订单数据表';
+        $title = date('Y - m', $month_old) . ' - ' . date('Y - m', $month_new) . '订单数据表';
 
         self::exportExcel($title, $dataList);
     }

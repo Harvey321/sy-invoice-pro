@@ -3,33 +3,34 @@
 
     <!-- 标题栏 -->
     <section class="content-header"></section>
-    
+
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">编辑发票</h3>
                 </div>
-                <form role="form" >
+                <form role="form">
                     <div class="card-body">
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="exampleInputEmail1">crmID:</label>
                             <input type="text" id="crm_id" name="crm_id" value="{{$data->crm_id}}"
                                    class="form-control" placeholder="请输入crmID" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()">
+                                   onkeyup="this.value=this.value.trim()"
+                                   {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">业务员:</label>
                             <input type="text" id="business_name" name="business_name" value="{{$data->business_name}}"
                                    class="form-control" placeholder="请输入业务员" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()">
+                                   onkeyup="this.value=this.value.trim()" {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">客户名:</label>
                             <input type="text" id="customer_name" name="customer_name" value="{{$data->customer_name}}"
                                    class="form-control" placeholder="请输入客户名" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()">
+                                   onkeyup="this.value=this.value.trim()" {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">开票名:</label>
@@ -66,7 +67,8 @@
                             <div class="input-group date" id="reservationdate-month" data-date-format="yyyy-mm">
                                 <input class='input-group date form-control datetimepicker-input input-group-append'
                                        placeholder="请输入开票月份"
-                                       type="month" name="ticket_month" id="ticket_month" value="{{ date('Y-m',$data->ticket_month) }}"/>
+                                       type="month" name="ticket_month" id="ticket_month"
+                                       value="{{ date('Y-m',$data->ticket_month) }}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -91,8 +93,11 @@
 
                     <div class="card-footer"
                          style="display: flex;flex-direction: row;justify-content: space-around">
-                        <div type="submit" id="getDate" onclick="dataUpdate({{$data->id}})" class="btn btn-block btn-primary">提交</div>
-                        <button type="reset" onclick="resetForm()" class="btn btn-block btn-outline-secondary" style="margin-top:0;">
+                        <div type="submit" id="getDate" onclick="dataUpdate({{$data->id}})"
+                             class="btn btn-block btn-primary">提交
+                        </div>
+                        <button type="reset" onclick="resetForm()" class="btn btn-block btn-outline-secondary"
+                                style="margin-top:0;">
                             重置
                         </button>
                     </div>
@@ -104,7 +109,7 @@
 
 
     <script>
-        function dataUpdate(id){
+        function dataUpdate(id) {
             let data = $('form').serializeArray();
 
             // //表单验证

@@ -30,7 +30,6 @@
         </div>
     </section>
 
-
     <!-- 新表格 -->
     <section class="content">
         <div class="container-fluid">
@@ -87,9 +86,9 @@
                                     <th>到期日</th>
                                     <th>状态</th>
                                     <th>创建时间</th>
-                                    @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))
+{{--                                    @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))--}}
                                         <th class="none">操作</th>
-                                    @endif
+{{--                                    @endif--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -111,20 +110,21 @@
                                             {{$item->status == 10? '状态正常': '发票作废'}}
                                         </td>
                                         <td>{{$item->created_at}}</td>
-                                        @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))
                                             <td>
                                                 <a href="/admin/invoice/edit?id={{$item->id}}"
                                                    class="btn btn-block bg-gradient-primary btn-xs"
                                                    style="margin-right:4px;margin-top:5px;max-width: 100px;min-width: 80px;">编辑
                                                 </a>
+                                                @if(in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission')))
                                                 <a href="" onclick="setDelUrl({{$item->id}})"
                                                    class="btn btn-block bg-gradient-danger btn-xs"
                                                    data-toggle="modal" data-target="#modal-sm"
                                                    data-orderId="{{$item->id}}"
                                                    style="margin-top:5px;max-width: 100px;min-width: 80px;">删除
                                                 </a>
+                                                @endif
+
                                             </td>
-                                        @endif
                                     </tr>
                                 @endforeach
 
