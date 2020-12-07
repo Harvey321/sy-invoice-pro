@@ -64,11 +64,12 @@ class TaskController extends Controller
 
         //附件文件名
         $file_name = $title . '.xls';
-        iconv("utf-8","gb2312",$file_name);
+//        iconv("utf-8","gb2312",$file_name);
         //发送邮件
         $mail = new MailController();
 echo 6666;
         $mail->send('次月合同期满客户表', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
+        echo 7777;
     }
 
 }
