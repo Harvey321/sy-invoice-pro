@@ -18,17 +18,11 @@ class TaskController extends Controller
      */
     public function exportExcel($title, $list)
     {
-        echo 4444;
-        echo storage_path('excel/exports');
         Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
-            echo storage_path('excel/exports');
-
         })->store('xls', storage_path('excel/exports'));
-        echo 5555;
-
     }
 
     //计划任务每月发送邮件 下月到期合同
@@ -53,26 +47,20 @@ class TaskController extends Controller
         array_unshift($data, $arr);
 
         //使用数据生成xls     每日一次不用担心文件名重复问题
-        $title = '' . date('Y-m-d', time());
-        echo 222;
+        $title = 'Invoice-Email哇哇哇哇' . date('Y-m-d', time());
 
         //导出EXcel
         self::exportExcel($title, $data);
 
-        echo 333;
-
-
         //获取临时文件地址
-        $temp_address = storage_path('excel/exports') . '/' . $title . '.xls';
+        $temp_address = storage_path('excel/exports') . '/' . iconv('UTF-8', 'GBK', $title) . '.xls';
 
         //附件文件名
         $file_name = $title . '.xls';
-//        iconv("utf-8","gb2312",$file_name);
+
         //发送邮件
         $mail = new MailController();
-echo 6666;
-        $mail->send('', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
-        echo 7777;
+        $mail->send('Invoice-Email哇哇哇哇', '604666621@qq.com', '上海双于通信技术有限公司', $temp_address, $file_name);
     }
 
 }
