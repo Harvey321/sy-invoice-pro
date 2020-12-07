@@ -26,11 +26,7 @@ class MailController extends Controller
             $message->attach($temp_address, ['as' => $file_name]);
 
         });
-
-        if (empty(Mail::failures())) {
-            echo  'error';
-        }
-        echo 'true';
+//        Mail::failures()
     }
 }
 

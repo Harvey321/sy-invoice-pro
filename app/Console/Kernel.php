@@ -28,7 +28,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(
             'App\Http\Controllers\Admin\TaskController@planTask'
-        )->everyMinute();
+        )->dailyAt('10:00');
+//  ->everyMinute(); //每分钟执行
     }
 
     /**
