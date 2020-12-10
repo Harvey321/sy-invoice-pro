@@ -28,15 +28,28 @@
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">业务员:</label>
-                            <input type="text" id="business_name" name="business_name" value=""
-                                   class="form-control" placeholder="请输入业务员" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()">
+                            <label for="exampleInputEmail1">开票公司:</label>
+                            <select name="invoice_company" id="invoice_company" class="form-control">
+                                <option value="10">上海双于通信技术有限公司</option>
+                                <option value="20">深圳是方通信技术有限公司</option>
+                                <option value="30">江西双格通信技术有限公司</option>
+                            </select>
                         </div>
+
+
                         <div class="form-group">
-                            <label for="exampleInputEmail1">客户名:</label>
-                            <input type="text" id="customer_name" name="customer_name" value=""
-                                   class="form-control" placeholder="请输入客户名" maxlength="100"
+                            <label for="exampleInputEmail1">业务员:</label>
+                            <select name="uid" id="uid" class="form-control">
+                                @foreach($user as $item)
+                                    <option value="{{$item->id}}">{{$item->username}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">公司名:</label>
+                            <input type="text" id="company_name" name="company_name" value=""
+                                   class="form-control" placeholder="请输入公司名" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
@@ -52,15 +65,15 @@
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">地址:</label>
-                            <input type="text" id="address" name="address" value=""
-                                   class="form-control" placeholder="请输入地址" maxlength="100"
+                            <label for="exampleInputEmail1">地址/电话:</label>
+                            <input type="text" id="address_mobile" name="address_mobile" value=""
+                                   class="form-control" placeholder="请输入地址/电话" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">电话:</label>
-                            <input type="text" id="mobile" name="mobile" value=""
-                                   class="form-control" placeholder="请输入电话" maxlength="100"
+                            <label for="exampleInputEmail1">开户行/账户:</label>
+                            <input type="text" id="bank_account" name="bank_account" value=""
+                                   class="form-control" placeholder="请输入开户行/账户" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
@@ -69,14 +82,26 @@
                                    class="form-control" placeholder="请输入金额" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
-                        {{--                        <div class="form-group">--}}
-                        {{--                            <label for="exampleInputEmail1">开票月份:</label>--}}
-                        {{--                            <div class="input-group date" id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
-                        {{--                                <input class='input-group date form-control datetimepicker-input input-group-append'--}}
-                        {{--                                       type="month" name="ticket_month" id="ticket_month" value=""/>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
-
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">发票类型:</label>
+                            <select name="invoice_type" id="invoice_type" class="form-control">
+                                <option value="10">普票</option>
+                                <option value="20">专票</option>
+                                <option value="30">收据</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">快递信息:</label>
+                            <input type="text" id="express" name="express" value=""
+                                   class="form-control" placeholder="请输入快递信息" maxlength="180"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">快递单号:</label>
+                            <input type="text" id="express_num" name="express_num" value=""
+                                   class="form-control" placeholder="请输入快递单号" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
                         <div class="form-group">
                             <label>开票月份:</label>
                             <div class="row" id="myTime">
@@ -98,10 +123,10 @@
 
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">到期日:</label>
+                            <label for="exampleInputEmail1">到期提醒日:</label>
                             <div class="input-group date" id="reservationdate" data-date-format="yyyy-mm">
                                 <input class='input-group date form-control datetimepicker-input input-group-append'
-                                       placeholder="请输入开始日"
+                                       placeholder="请输入到期提醒日"
                                        type="date" name="ticket_day" id="ticket_day" value=""/>
                             </div>
                         </div>
@@ -128,6 +153,8 @@
             let data = $('form').serializeArray();
 
             data.push({'name': 'yearMonth', 'value': tmp})
+
+            console.log(data);
 
             $.ajax({
                 type: "post",

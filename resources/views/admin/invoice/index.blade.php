@@ -57,10 +57,14 @@
                                                    value="{{isset($month_new) == true ? date('Y-m',$month_new) : date('Y-m',strtotime('0 month'))}}"/>
 
                                             <button class="btn btn-default button-left-margin" href="/">搜索</button>
-                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m').'&month_new='.date('Y-m')}}">当前月</a>
-                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m', strtotime("-2 month")).'&month_new='.date('Y-m')}}">近三月</a>
-                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m', strtotime("-5 month")).'&month_new='.date('Y-m')}}">近半年</a>
-                                            <a class="btn btn-info button-left-margin" href="{{'/?month_old='.date('Y-m', strtotime("-11 month")).'&month_new='.date('Y-m')}}">近一年</a>
+                                            <a class="btn btn-info button-left-margin"
+                                               href="{{'/?month_old='.date('Y-m').'&month_new='.date('Y-m')}}">当前月</a>
+                                            <a class="btn btn-info button-left-margin"
+                                               href="{{'/?month_old='.date('Y-m', strtotime("-2 month")).'&month_new='.date('Y-m')}}">近三月</a>
+                                            <a class="btn btn-info button-left-margin"
+                                               href="{{'/?month_old='.date('Y-m', strtotime("-5 month")).'&month_new='.date('Y-m')}}">近半年</a>
+                                            <a class="btn btn-info button-left-margin"
+                                               href="{{'/?month_old='.date('Y-m', strtotime("-11 month")).'&month_new='.date('Y-m')}}">近一年</a>
                                         </div>
                                     </form>
                                 </div>
@@ -70,61 +74,83 @@
                             </div>
                         </div>
                         <div class="card-body">
+{{--                            style="overflow: scroll;"--}}
                             <table id="example1" class="table table-bordered table-striped  ">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>crmID</th>
-                                    <th>业务员名</th>
-                                    <th>客户名</th>
+                                    <th>开票公司</th>
+                                    <th class="none">业务员名</th>
+                                    <th>公司名</th>
                                     <th>开票名</th>
                                     <th>税号</th>
-                                    <th>地址</th>
-                                    <th>电话</th>
+                                    <th>地址/电话</th>
+                                    <th>开户行/账户</th>
                                     <th>金额</th>
+                                    <th>发票类型</th>
+                                    <th class="none">快递信息</th>
+                                    <th class="none">快递单号</th>
                                     <th>开票月份</th>
-                                    <th>到期日</th>
+                                    <th class="none">到期提醒日</th>
                                     <th>状态</th>
-                                    <th>创建时间</th>
-{{--                                    @if(in_array('App\Http\Controllers\Admin\InvoiceController@edit',session()->get('permission')))--}}
-                                        <th class="none">操作</th>
-{{--                                    @endif--}}
+                                    <th>备注</th>
+                                    {{--                                    <th>创建时间</th>--}}
+                                    <th class="none">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+<!--                                --><?php //dd($dataList); ?>
                                 @foreach($dataList as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
                                         <td>{{$item->crm_id}}</td>
-                                        <td>{{$item->business_name}}</td>
-                                        <td>{{$item->customer_name}}</td>
+                                        <td>
+                                            {{$item->invoice_company == '10'?'上海双于通信技术有限公司':''}}
+                                            {{$item->invoice_company == '20'?'深圳是方通信技术有限公司':''}}
+                                            {{$item->invoice_company == '30'?'江西双格通信技术有限公司':''}}
+                                        </td>
+                                        <td>
+                                            {{$item->invoiceUid->first()->username}}
+{{--                                            {{$item->uid}}--}}
+                                        </td>
+                                        <td>{{$item->company_name}}</td>
                                         <td>{{$item->ticket_name}}</td>
                                         <td>{{$item->tax_num}}</td>
-                                        <td>{{$item->address}}</td>
-                                        <td>{{$item->mobile}}</td>
+                                        <td>{{$item->address_mobile}}</td>
+                                        <td>{{$item->bank_account}}</td>
                                         <td>{{$item->money}}</td>
+                                        <td>
+                                            {{$item->invoice_type == '10'?'普票':''}}
+                                            {{$item->invoice_type == '20'?'专票':''}}
+                                            {{$item->invoice_type == '30'?'收据':''}}
+                                        </td>
+                                        <td>{{$item->express}}</td>
+                                        <td>{{$item->express_num}}</td>
                                         <td>{{ date('Y-m',$item->ticket_month) }}</td>
-                                        {{--                                        <td>{{$item->ticket_month}}</td>--}}
                                         <td>{{$item->ticket_day}}</td>
                                         <td>
-                                            {{$item->status == 10? '状态正常': '发票作废'}}
+                                            {{$item->status == '10'?'未开票':''}}
+                                            {{$item->status == '20'?'已开票':''}}
+                                            {{$item->status == '90'?'发票作废':''}}
                                         </td>
-                                        <td>{{$item->created_at}}</td>
-                                            <td>
-                                                <a href="/admin/invoice/edit?id={{$item->id}}"
-                                                   class="btn btn-block bg-gradient-primary btn-xs"
-                                                   style="margin-right:4px;margin-top:5px;max-width: 100px;min-width: 80px;">编辑
-                                                </a>
-                                                @if(in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission')))
+                                        <td>{{$item->description}}</td>
+                                        {{--                                        <td>{{$item->created_at}}</td>--}}
+                                        <td>
+                                            <a href="/admin/invoice/edit?id={{$item->id}}"
+                                               class="btn btn-block bg-gradient-primary btn-xs"
+                                               style="margin-right:4px;margin-top:5px;max-width: 100px;min-width: 80px;">编辑
+                                            </a>
+                                            @if(in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission')))
                                                 <a href="" onclick="setDelUrl({{$item->id}})"
                                                    class="btn btn-block bg-gradient-danger btn-xs"
                                                    data-toggle="modal" data-target="#modal-sm"
                                                    data-orderId="{{$item->id}}"
                                                    style="margin-top:5px;max-width: 100px;min-width: 80px;">删除
                                                 </a>
-                                                @endif
+                                            @endif
 
-                                            </td>
+                                        </td>
                                     </tr>
                                 @endforeach
 
@@ -144,12 +170,11 @@
             window.location = href;
         }
 
-
         $(function () {
             $("#example1").DataTable({
-                "responsive": false,
-                // "autoWidth": true,
-                // "scrollX": true,
+                "responsive": true,
+                "autoWidth": false,
+                "scrollX": true,
                 "bLengthChange": true, //开关，是否显示每页显示多少条数据的下拉框
                 "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "所有"]],//设置每页显示数据条数的下拉选项
                 'iDisplayLength': 10, //每页初始显示5条记录
@@ -158,24 +183,10 @@
                 "bSort": true, //是否可排序 
                 // "pagingType": "full_numbers",  //显示尾页和首页
                 "language": {
-                    search: "搜索："
+                    'search': "搜索：",
+                    'infoEmpty': "",
+                    "emptyTable":"该范围内暂无数据",
                 },
-                // "columnDefs": [
-                //     { "width": "5%", "targets": 0 },
-                //     { "width": "10%", "targets": 1 },
-                //     { "width": "6%", "targets": 2 },
-                //     { "width": "6%", "targets": 3 },
-                //     { "width": "15%", "targets": 4 },
-                //     { "width": "10%", "targets": 5 },
-                //     { "width": "15%", "targets": 6 },
-                //     { "width": "10%", "targets": 7 },
-                //     { "width": "10%", "targets": 8 },
-                //     { "width": "15%", "targets": 9 },
-                //     { "width": "10%", "targets": 10 },
-                //     { "width": "10%", "targets": 11 },
-                //     { "width": "10%", "targets": 12 },
-                //     { "width": "10%", "targets": 13 },
-                // ],
                 "oLanguage": {  //语言转换
                     "sInfo": "显示第 _START_ - _END_ 项，共 _TOTAL_ 项",
                     "sLengthMenu": "每页显示 _MENU_ 项结果",

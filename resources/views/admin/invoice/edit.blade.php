@@ -17,19 +17,34 @@
                             <label for="exampleInputEmail1">crmID:</label>
                             <input type="text" id="crm_id" name="crm_id" value="{{$data->crm_id}}"
                                    class="form-control" placeholder="请输入crmID" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()"
-                                   {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
+                                   onkeyup="this.value=this.value.trim()" disabled>
+{{--                            in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'--}}
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">开票公司:</label>
+                            <select name="invoice_company" id="invoice_company" class="form-control">
+                                <option value="10" {{$data->invoice_company == 10 ? 'selected' : ''}}>上海双于通信技术有限公司</option>
+                                <option value="20" {{$data->invoice_company == 20 ? 'selected' : ''}}>深圳是方通信技术有限公司	</option>
+                                <option value="30" {{$data->invoice_company == 30 ? 'selected' : ''}}>江西双格通信技术有限公司	</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">业务员:</label>
-                            <input type="text" id="business_name" name="business_name" value="{{$data->business_name}}"
-                                   class="form-control" placeholder="请输入业务员" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()" {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
+                            <select name="uid" id="uid"
+                                    class="form-control" {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
+                                @foreach($user as $item)
+                                    <option value="{{$item->id}}"{{$item->id == $data->uid ?'selected':''}}>
+                                        {{$item->username}}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="exampleInputEmail1">客户名:</label>
-                            <input type="text" id="customer_name" name="customer_name" value="{{$data->customer_name}}"
-                                   class="form-control" placeholder="请输入客户名" maxlength="100"
+                            <label for="exampleInputEmail1">公司名:</label>
+                            <input type="text" id="company_name" name="company_name" value="{{$data->company_name}}"
+                                   class="form-control" placeholder="请输入公司名" maxlength="100"
                                    onkeyup="this.value=this.value.trim()" {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
                         </div>
                         <div class="form-group">
@@ -45,21 +60,41 @@
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">地址:</label>
-                            <input type="text" id="address" name="address" value="{{$data->address}}"
-                                   class="form-control" placeholder="请输入地址" maxlength="100"
+                            <label for="exampleInputEmail1">地址/电话:</label>
+                            <input type="text" id="address_mobile" name="address_mobile" value="{{$data->address_mobile}}"
+                                   class="form-control" placeholder="请输入地址/电话" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">电话:</label>
-                            <input type="text" id="mobile" name="mobile" value="{{$data->mobile}}"
-                                   class="form-control" placeholder="请输入电话" maxlength="100"
+                            <label for="exampleInputEmail1">开户行/账户:</label>
+                            <input type="text" id="bank_account" name="bank_account" value="{{$data->bank_account}}"
+                                   class="form-control" placeholder="请输入开户行/账户" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">金额:</label>
                             <input type="text" id="money" name="money" value="{{$data->money}}"
                                    class="form-control" placeholder="请输入金额" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">发票类型:</label>
+                            <select name="invoice_type" id="invoice_type" class="form-control">
+                                <option value="10" {{$data->invoice_type == 10 ? 'selected' : ''}}>普票</option>
+                                <option value="20" {{$data->invoice_type == 20 ? 'selected' : ''}}>专票</option>
+                                <option value="90" {{$data->invoice_type == 30 ? 'selected' : ''}}>收据</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">快递信息:</label>
+                            <input type="text" id="express" name="express" value="{{$data->express}}"
+                                   class="form-control" placeholder="请输入快递信息" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">快递单号:</label>
+                            <input type="text" id="express_num" name="express_num" value="{{$data->express_num}}"
+                                   class="form-control" placeholder="请输入快递单号" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
                         <div class="form-group">
@@ -79,12 +114,19 @@
                                        type="date" name="ticket_day" id="ticket_day" value="{{$data->ticket_day}}"/>
                             </div>
                         </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="exampleInputEmail1">备注:</label>--}}
+{{--                            <input type="text" id="description" name="description" value="{{$data->description}}"--}}
+{{--                                   class="form-control" placeholder="" maxlength="100"--}}
+{{--                                   onkeyup="this.value=this.value.trim()">--}}
+{{--                        </div>--}}
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">状态</label>
                             <select name="status" id="status" class="form-control">
-                                <option value="10" {{$data->status == 10 ? 'selected' : ''}}>正常使用</option>
-                                <option value="90" {{$data->status == 90 ? 'selected' : ''}}>已作废</option>
+                                <option value="10" {{$data->status == 10 ? 'selected' : ''}}>未开票</option>
+                                <option value="20" {{$data->status == 20 ? 'selected' : ''}}>已开票</option>
+                                <option value="90" {{$data->status == 90 ? 'selected' : ''}}>发票作废</option>
                             </select>
                         </div>
 
@@ -112,12 +154,6 @@
         function dataUpdate(id) {
             let data = $('form').serializeArray();
 
-            // //表单验证
-            // let res = formVerification()
-            // if (res == false) {
-            //     return false;
-            // }
-
             $.ajax({
                 type: "post",
                 url: "/admin/invoice/update",
@@ -137,32 +173,6 @@
                 }
             })
         }
-
-        function formVerification() {
-            //表单验证
-            if ($('#sn').val() == '') {
-                toastr.error('请输入发票id/序列号')
-                return false;
-            }
-            if ($('#invoice_name').val() == '') {
-                toastr.error('请输入发票名称')
-                return false;
-            }
-            if ($('#model').val() == '') {
-                toastr.error('请输入发票型号')
-                return false;
-            }
-            if ($('#address').val() == '') {
-                toastr.error('请输入安装地')
-                return false;
-            }
-            if ($('#rate').val() == '') {
-                toastr.error('请输入带宽')
-                return false;
-            }
-            return true;
-        }
-
 
     </script>
 

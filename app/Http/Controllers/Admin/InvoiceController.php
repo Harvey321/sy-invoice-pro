@@ -24,11 +24,11 @@ class InvoiceController extends Controller
         $query = Invoice::orderBy('id', 'DESC');
 
         //查询登录用户的信息
-        $user =  User::where('id',session()->get('user')->id)->first();
+        $user = User::where('id', session()->get('user')->id)->first();
 
-        if (!empty($user->role[0]['sign']=='business')) {
-            $query->where('business_name',$user->username);
-        }
+//        if (!empty($user->role[0]['sign'] == 'business')) {
+//            $query->where('business_name', $user->username);
+//        }
 
         if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
             $month_old = strtotime($request->all()['month_old']);
@@ -58,7 +58,8 @@ class InvoiceController extends Controller
      */
     public function add()
     {
-        return view('admin.invoice.add');
+        $user = User::all();
+        return view('admin.invoice.add', ['user' => $user]);
     }
 
     /**
@@ -73,20 +74,25 @@ class InvoiceController extends Controller
             //保存发票信息
             $obj = new Invoice();
             $obj->crm_id = $formData['crm_id'];
-            $obj->business_name = $formData['business_name'];
-            $obj->customer_name = $formData['customer_name'];
+            $obj->invoice_company = $formData['invoice_company'];
+            $obj->uid = $formData['uid'];
+            $obj->company_name = $formData['company_name'];
             $obj->ticket_name = $formData['ticket_name'];
             $obj->tax_num = $formData['tax_num'];
-            $obj->address = $formData['address'];
-            $obj->mobile = $formData['mobile'];
+            $obj->address_mobile = $formData['address_mobile'];
+            $obj->bank_account = $formData['bank_account'];
             $obj->money = $formData['money'];
-            $obj->ticket_day = $formData['ticket_day'];
+            $obj->invoice_type = $formData['invoice_type'];
+            $obj->express = $formData['express'];
+            $obj->express_num = $formData['express_num'];
             $obj->ticket_month = strtotime($formData['yearMonth'][$i]);
+            $obj->ticket_day = $formData['ticket_day'];
             $obj->save();
         }
 
+        $bussiness_name = User::find($formData['uid'])->first()->username;
         $mail = new MailController();
-        $mail->newInvoiceSend('新加入合同发票信息', '604666621@qq.com', '上海双于通信技术有限公司', $formData['business_name'], $formData['crm_id'], $formData['customer_name']);
+        $mail->newInvoiceSend('新加入合同发票信息', '604666621@qq.com', '上海双于通信技术有限公司', $bussiness_name, $formData['crm_id'], $formData['company_name']);
 
         return ['status' => 1, 'message' => '发票添加成功'];
     }
@@ -130,7 +136,10 @@ class InvoiceController extends Controller
         //查询此发票是否存在
         $data = Invoice::find($id);
 
-        return view('admin.invoice.edit', ['data' => $data]);
+        $user = User::all();
+
+
+        return view('admin.invoice.edit', ['data' => $data, 'user' => $user]);
     }
 
     /**
@@ -159,7 +168,7 @@ class InvoiceController extends Controller
      */
     public function exportExcel($title, $list)
     {
-        Excel::create(iconv('UTF - 8', 'GBK', $title), function ($excel) use ($list) {
+        Excel::create(iconv('UTF-8', 'GBK', $title), function ($excel) use ($list) {
             $excel->sheet('score', function ($sheet) use ($list) {
                 $sheet->rows($list);
             });
@@ -185,17 +194,27 @@ class InvoiceController extends Controller
         $dataList = json_decode(json_encode($dataList), true);
 
         foreach ($dataList as $key => $value) {
+            unset($value['blank']);//空白字段留后
+            unset($value['created_at']);//导出不需要
+            unset($value['updated_at']);//导出不需要
+
             foreach ($value as $k => $v) {
+//                if ($value['invoice_company']== )
                 $value[$k] = "\t" . $v . "\t";
             }
+
             $dataList[$key] = $value;
+
+
         }
 
         $arr = Invoice::$field;
 
         array_unshift($dataList, $arr);
 
-        $title = date('Y - m', $month_old) . ' - ' . date('Y - m', $month_new) . '订单数据表';
+        $title = date('Y.m', $month_old) . '-' . date('Y.m', $month_new) . '订单数据表';
+//        dump($title);
+//        dd($dataList);
 
         self::exportExcel($title, $dataList);
     }
