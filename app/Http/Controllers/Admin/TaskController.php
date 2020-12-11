@@ -31,15 +31,22 @@ class TaskController extends Controller
         //获取需要发送邮件的数据data
         $invoiceList = Invoice::all();
         $data = [];//符合条件的发票
-        $new_date = strtotime('-1 day');//当前时间戳
+        $new_date = time();
+
+        ;//当前时间戳
 
         foreach ($invoiceList as $item) {
             $invoice_end = strtotime($item['ticket_day']);//当前发票截至时间
 
             $thirty_day = 2592000;//60*60*24*30 三十天的时间戳
-            $three_day = 259200;
+            $three_day = 259200;//3天的时间戳
 
-            if ((($invoice_end - $new_date) > 0) && (($invoice_end - $new_date) < $thirty_day) &&  (($invoice_end - $new_date) > $three_day) ) {
+            $twenty_seven_day = $thirty_day - $three_day; //27天的差值
+
+            //截至日期于当前的时间差    大于27天 小于30天
+            $diff = $invoice_end - $new_date;
+
+            if (($invoice_end > $new_date) && $diff > $twenty_seven_day && $diff < $thirty_day) {
                 unset($item['blank']);//空白字段留后
                 unset($item['created_at']);//导出不需要
                 unset($item['updated_at']);//导出不需要
@@ -88,9 +95,9 @@ class TaskController extends Controller
             }
 
         }
-
+        dd($data);
         $data = json_decode(json_encode($data), true);//查询对象转数组
-        if (empty($data)){
+        if (empty($data)) {
             return '未查询到内容';
         }
 
