@@ -39,7 +39,7 @@ class TaskController extends Controller
             $thirty_day = 2592000;//60*60*24*30 三十天的时间戳
             $three_day = 259200;
 
-            if ($invoice_end - $new_date > 0 && $invoice_end - $new_date < $thirty_day &&  $invoice_end - $new_date > $three_day ) {
+            if ((($invoice_end - $new_date) > 0) && (($invoice_end - $new_date) < $thirty_day) &&  (($invoice_end - $new_date) > $three_day) ) {
                 unset($item['blank']);//空白字段留后
                 unset($item['created_at']);//导出不需要
                 unset($item['updated_at']);//导出不需要
