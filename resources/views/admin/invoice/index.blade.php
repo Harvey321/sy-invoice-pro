@@ -101,9 +101,9 @@
                                     </div>
                                     <div class="col-4 offset-1 d-flex flex-row justify-content-start">
                                         <button class="btn btn-primary button-left-margin"
-                                                style="width: 130px;margin-right:30px;">搜&nbsp;&nbsp;索
+                                                style="width: 130px;margin-right:30px;height: 38px;">搜&nbsp;&nbsp;索
                                         </button>
-                                        <a class="btn btn-dark" style="width: 130px;color:white;" onclick="getUrl()">导出列表</a>
+                                        <a class="btn btn-dark" style="width: 130px;color:white;height: 38px;" onclick="getUrl()">导出列表</a>
                                     </div>
                                 </div>
                             </form>
@@ -115,20 +115,20 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>crmID</th>
-                                    <th>开票公司</th>
-                                    <th class="none">业务员名</th>
+                                    <th class="none">开票公司</th>
+                                    <th >业务员名</th>
                                     <th>公司名</th>
                                     <th>开票名</th>
-                                    <th>税号</th>
+                                    <th >税号</th>
                                     <th>地址/电话</th>
                                     <th>开户行/账户</th>
                                     <th>金额</th>
-                                    <th>发票类型</th>
+                                    <th class="none">发票类型</th>
                                     <th class="none">快递信息</th>
                                     <th class="none">快递单号</th>
                                     <th>开票月份</th>
                                     <th class="none">到期提醒日</th>
-                                    <th>状态</th>
+                                    <th class="none">状态</th>
                                     <th>备注</th>
                                     {{--                                    <th>创建时间</th>--}}
                                     <th class="none">操作</th>

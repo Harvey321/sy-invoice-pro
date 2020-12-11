@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/12/2020 11:20:20
+ Date: 11/12/2020 16:51:28
 */
 
 SET NAMES utf8mb4;
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `invoice`;
 CREATE TABLE `invoice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '发票id',
   `crm_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'crmId',
-  `invoice_company` int(11) NOT NULL DEFAULT 10  COMMENT '开票公司 10上海双于/20深圳是方/30江西双格',
+  `invoice_company` int(11) NOT NULL DEFAULT 10 COMMENT '开票公司 10上海双于/20深圳是方/30江西双格',
   `uid` int(11) NOT NULL COMMENT '业务员Id',
   `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公司名',
   `ticket_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开票名',
@@ -32,7 +32,7 @@ CREATE TABLE `invoice`  (
   `address_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址/电话',
   `bank_account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开户行/账户',
   `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '金额',
-  `invoice_type` int(11) NOT NULL DEFAULT 10  COMMENT '发票类型 10普票/20专票/30收据',
+  `invoice_type` int(11) NOT NULL DEFAULT 10 COMMENT '发票类型 10普票/20专票/30收据',
   `express` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递信息',
   `express_num` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递单号',
   `ticket_month` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开票月份',
@@ -45,14 +45,34 @@ CREATE TABLE `invoice`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `crm_id`(`crm_id`) USING BTREE,
   INDEX `ticket_day`(`ticket_day`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1001 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发票表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1049 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发票表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of invoice
 -- ----------------------------
-INSERT INTO `invoice` VALUES (1001, '20E0671C95BA', 10, 1002, '客户名1', '华信塞姆科技有限公司', '91510000321690065M', '四川省成都市高新区天华一路99号天府软件园B区8栋/028-66048388', '工行成都市城南支行/3302235009100139999', '5000', 10,'王志成，13378102298，四川省成都市高新区天府大道天府软件园B区8栋5楼', 'SF6546654132','1596240000', '2020-12-08', '','',10, '2020-07-17 06:51:58', '2020-12-07 09:42:54');
-INSERT INTO `invoice` VALUES (1002, '01E0671C95BA', 20, 1002, '客户名2', '中泰科技技术有限公司', '78645670321690065M', '四川省成都市高新区天华一路99号天府软件园B区8栋/028-66048388', '工行成都市城南支行/3302235009100188888', '8000', 20,'赵志成，13378102298，四川省成都市高新区天府大道天府软件园B区8栋5楼', 'SF6544440888','1596240000', '2020-12-09', '','', 20,'2020-07-17 06:51:58', '2020-11-26 07:28:39');
-INSERT INTO `invoice` VALUES (1003, '72E0671C95BA', 30, 1002, '客户名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路99号天府软件园B区8栋/023-44946561', '工行成都市城南支行/2202235009100177777', '9000', 30,'李志成，13378102298，四川省成都市高新区天府大道天府软件园B区8栋5楼', 'SF6581111132','1596240000', '2020-12-04', '','',90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1001, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1002, '01E0671C95BA', 20, 1002, '公司名公司名公司名2', '中泰科技技术有限公司', '78645670321690065M', '四川省成都市高新区/021-66666666', '工行成都市支行/3302235009100188888', '8000', 20, '王五，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6544440888', '1596240000', '2020-12-15', '', '', 20, '2020-07-17 06:51:58', '2020-12-08 06:24:19');
+INSERT INTO `invoice` VALUES (1003, '72E0671C95BA', 30, 1002, '公司名公司名公司名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581113132', '1596240000', '2020-12-04', '', '', 90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1004, '72E0671C95BA', 10, 1002, '公司名公司名公司名1', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581232132', '1596240000', '2020-12-04', '', '', 10, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1005, '72E0671C95BA', 20, 1002, '公司名公司名公司名2', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581115454', '1596240000', '2020-12-04', '', '', 20, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1006, '72E0671C95BA', 30, 1002, '公司名公司名公司名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581143217', '1596240000', '2020-12-04', '', '', 90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1007, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1008, '01E0671C95BA', 20, 1002, '公司名公司名公司名2', '中泰科技技术有限公司', '78645670321690065M', '四川省成都市高新区/021-66666666', '工行成都市支行/3302235009100188888', '8000', 20, '王五，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6544440888', '1596240000', '2020-12-15', '', '', 20, '2020-07-17 06:51:58', '2020-12-08 06:24:19');
+INSERT INTO `invoice` VALUES (1009, '72E0671C95BA', 30, 1002, '公司名公司名公司名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581113132', '1596240000', '2020-12-04', '', '', 90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1010, '72E0671C95BA', 10, 1002, '公司名公司名公司名1', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581232132', '1596240000', '2020-12-04', '', '', 10, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1011, '72E0671C95BA', 20, 1002, '公司名公司名公司名2', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581115454', '1596240000', '2020-12-04', '', '', 20, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1012, '72E0671C95BA', 30, 1002, '公司名公司名公司名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581143217', '1596240000', '2020-12-04', '', '', 90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1013, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1014, '01E0671C95BA', 20, 1002, '公司名公司名公司名2', '中泰科技技术有限公司', '78645670321690065M', '四川省成都市高新区/021-66666666', '工行成都市支行/3302235009100188888', '8000', 20, '王五，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6544440888', '1596240000', '2020-12-15', '', '', 20, '2020-07-17 06:51:58', '2020-12-08 06:24:19');
+INSERT INTO `invoice` VALUES (1015, '72E0671C95BA', 30, 1002, '公司名公司名公司名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581113132', '1596240000', '2020-12-04', '', '', 90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1016, '72E0671C95BA', 10, 1002, '公司名公司名公司名1', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581232132', '1596240000', '2020-12-04', '', '', 10, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1017, '72E0671C95BA', 20, 1002, '公司名公司名公司名2', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581115454', '1596240000', '2020-12-04', '', '', 20, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1018, '72E0671C95BA', 30, 1002, '公司名公司名公司名3', '泰星科技技术有限公司', '36490000321690065M', '四川省成都市高新区天华一路/023-65656565', '工行成都市支行/2202235009100177777', '9000', 30, '李四，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6581143217', '1596240000', '2020-12-04', '', '', 90, '2020-07-17 06:51:58', '2020-11-25 01:20:15');
+INSERT INTO `invoice` VALUES (1019, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1020, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1021, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1022, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
+INSERT INTO `invoice` VALUES (1023, '20E0671C95BA', 10, 1002, '公司名公司名公司名1', '华信塞姆科技有限公司1', '91510000321690065M', '四川省成都市高新区/028-55555555', '工行成都市支行/3302235009100139999', '5000', 10, '张三，13366666666，四川省成都市高新区天府大道天府软件园', 'SF6546654132', '1610089137', '2021-01-13', '', '', 10, '2020-07-17 06:51:58', '2020-12-09 08:56:46');
 
 -- ----------------------------
 -- Table structure for permission
@@ -65,7 +85,7 @@ CREATE TABLE `permission`  (
   `status` int(11) NOT NULL DEFAULT 10 COMMENT '状态/10正常/90删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `per_name`(`per_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1048 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1049 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permission
@@ -117,6 +137,7 @@ INSERT INTO `permission` VALUES (1044, '发票删除', 'App\\Http\\Controllers\\
 INSERT INTO `permission` VALUES (1045, '发票修改页', 'App\\Http\\Controllers\\Admin\\InvoiceController@edit', 10);
 INSERT INTO `permission` VALUES (1046, '发票修改', 'App\\Http\\Controllers\\Admin\\InvoiceController@update', 10);
 INSERT INTO `permission` VALUES (1047, '导出发票信息', 'App\\Http\\Controllers\\Admin\\InvoiceController@ExcelGet', 10);
+INSERT INTO `permission` VALUES (1048, '发票查询页面', 'App\\Http\\Controllers\\Admin\\InvoiceController@search', 10);
 
 -- ----------------------------
 -- Table structure for role
@@ -147,69 +168,72 @@ CREATE TABLE `role_permission`  (
   `rid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色id',
   `pid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1656 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限分配表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1717 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限分配表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
-INSERT INTO `role_permission` VALUES (1596, '1002', '1041');
-INSERT INTO `role_permission` VALUES (1597, '1002', '1042');
-INSERT INTO `role_permission` VALUES (1598, '1002', '1043');
-INSERT INTO `role_permission` VALUES (1599, '1002', '1044');
-INSERT INTO `role_permission` VALUES (1600, '1002', '1045');
-INSERT INTO `role_permission` VALUES (1601, '1002', '1046');
-INSERT INTO `role_permission` VALUES (1602, '1002', '1047');
-INSERT INTO `role_permission` VALUES (1603, '1001', '1001');
-INSERT INTO `role_permission` VALUES (1604, '1001', '1002');
-INSERT INTO `role_permission` VALUES (1605, '1001', '1003');
-INSERT INTO `role_permission` VALUES (1606, '1001', '1004');
-INSERT INTO `role_permission` VALUES (1607, '1001', '1005');
-INSERT INTO `role_permission` VALUES (1608, '1001', '1006');
-INSERT INTO `role_permission` VALUES (1609, '1001', '1007');
-INSERT INTO `role_permission` VALUES (1610, '1001', '1008');
-INSERT INTO `role_permission` VALUES (1611, '1001', '1009');
-INSERT INTO `role_permission` VALUES (1612, '1001', '1010');
-INSERT INTO `role_permission` VALUES (1613, '1001', '1011');
-INSERT INTO `role_permission` VALUES (1614, '1001', '1012');
-INSERT INTO `role_permission` VALUES (1615, '1001', '1013');
-INSERT INTO `role_permission` VALUES (1616, '1001', '1014');
-INSERT INTO `role_permission` VALUES (1617, '1001', '1015');
-INSERT INTO `role_permission` VALUES (1618, '1001', '1016');
-INSERT INTO `role_permission` VALUES (1619, '1001', '1017');
-INSERT INTO `role_permission` VALUES (1620, '1001', '1018');
-INSERT INTO `role_permission` VALUES (1621, '1001', '1019');
-INSERT INTO `role_permission` VALUES (1622, '1001', '1020');
-INSERT INTO `role_permission` VALUES (1623, '1001', '1021');
-INSERT INTO `role_permission` VALUES (1624, '1001', '1022');
-INSERT INTO `role_permission` VALUES (1625, '1001', '1023');
-INSERT INTO `role_permission` VALUES (1626, '1001', '1024');
-INSERT INTO `role_permission` VALUES (1627, '1001', '1025');
-INSERT INTO `role_permission` VALUES (1628, '1001', '1026');
-INSERT INTO `role_permission` VALUES (1629, '1001', '1027');
-INSERT INTO `role_permission` VALUES (1630, '1001', '1028');
-INSERT INTO `role_permission` VALUES (1631, '1001', '1029');
-INSERT INTO `role_permission` VALUES (1632, '1001', '1030');
-INSERT INTO `role_permission` VALUES (1633, '1001', '1031');
-INSERT INTO `role_permission` VALUES (1634, '1001', '1032');
-INSERT INTO `role_permission` VALUES (1635, '1001', '1033');
-INSERT INTO `role_permission` VALUES (1636, '1001', '1034');
-INSERT INTO `role_permission` VALUES (1637, '1001', '1035');
-INSERT INTO `role_permission` VALUES (1638, '1001', '1036');
-INSERT INTO `role_permission` VALUES (1639, '1001', '1037');
-INSERT INTO `role_permission` VALUES (1640, '1001', '1038');
-INSERT INTO `role_permission` VALUES (1641, '1001', '1039');
-INSERT INTO `role_permission` VALUES (1642, '1001', '1040');
-INSERT INTO `role_permission` VALUES (1643, '1001', '1041');
-INSERT INTO `role_permission` VALUES (1644, '1001', '1042');
-INSERT INTO `role_permission` VALUES (1645, '1001', '1043');
-INSERT INTO `role_permission` VALUES (1646, '1001', '1044');
-INSERT INTO `role_permission` VALUES (1647, '1001', '1045');
-INSERT INTO `role_permission` VALUES (1648, '1001', '1046');
-INSERT INTO `role_permission` VALUES (1649, '1001', '1047');
-INSERT INTO `role_permission` VALUES (1652, '1003', '1041');
-INSERT INTO `role_permission` VALUES (1653, '1003', '1045');
-INSERT INTO `role_permission` VALUES (1654, '1003', '1046');
-INSERT INTO `role_permission` VALUES (1655, '1003', '1047');
+INSERT INTO `role_permission` VALUES (1656, '1003', '1041');
+INSERT INTO `role_permission` VALUES (1657, '1003', '1045');
+INSERT INTO `role_permission` VALUES (1658, '1003', '1046');
+INSERT INTO `role_permission` VALUES (1659, '1003', '1047');
+INSERT INTO `role_permission` VALUES (1660, '1003', '1048');
+INSERT INTO `role_permission` VALUES (1661, '1002', '1041');
+INSERT INTO `role_permission` VALUES (1662, '1002', '1042');
+INSERT INTO `role_permission` VALUES (1663, '1002', '1043');
+INSERT INTO `role_permission` VALUES (1664, '1002', '1044');
+INSERT INTO `role_permission` VALUES (1665, '1002', '1045');
+INSERT INTO `role_permission` VALUES (1666, '1002', '1046');
+INSERT INTO `role_permission` VALUES (1667, '1002', '1047');
+INSERT INTO `role_permission` VALUES (1668, '1002', '1048');
+INSERT INTO `role_permission` VALUES (1669, '1001', '1001');
+INSERT INTO `role_permission` VALUES (1670, '1001', '1002');
+INSERT INTO `role_permission` VALUES (1671, '1001', '1003');
+INSERT INTO `role_permission` VALUES (1672, '1001', '1004');
+INSERT INTO `role_permission` VALUES (1673, '1001', '1005');
+INSERT INTO `role_permission` VALUES (1674, '1001', '1006');
+INSERT INTO `role_permission` VALUES (1675, '1001', '1007');
+INSERT INTO `role_permission` VALUES (1676, '1001', '1008');
+INSERT INTO `role_permission` VALUES (1677, '1001', '1009');
+INSERT INTO `role_permission` VALUES (1678, '1001', '1010');
+INSERT INTO `role_permission` VALUES (1679, '1001', '1011');
+INSERT INTO `role_permission` VALUES (1680, '1001', '1012');
+INSERT INTO `role_permission` VALUES (1681, '1001', '1013');
+INSERT INTO `role_permission` VALUES (1682, '1001', '1014');
+INSERT INTO `role_permission` VALUES (1683, '1001', '1015');
+INSERT INTO `role_permission` VALUES (1684, '1001', '1016');
+INSERT INTO `role_permission` VALUES (1685, '1001', '1017');
+INSERT INTO `role_permission` VALUES (1686, '1001', '1018');
+INSERT INTO `role_permission` VALUES (1687, '1001', '1019');
+INSERT INTO `role_permission` VALUES (1688, '1001', '1020');
+INSERT INTO `role_permission` VALUES (1689, '1001', '1021');
+INSERT INTO `role_permission` VALUES (1690, '1001', '1022');
+INSERT INTO `role_permission` VALUES (1691, '1001', '1023');
+INSERT INTO `role_permission` VALUES (1692, '1001', '1024');
+INSERT INTO `role_permission` VALUES (1693, '1001', '1025');
+INSERT INTO `role_permission` VALUES (1694, '1001', '1026');
+INSERT INTO `role_permission` VALUES (1695, '1001', '1027');
+INSERT INTO `role_permission` VALUES (1696, '1001', '1028');
+INSERT INTO `role_permission` VALUES (1697, '1001', '1029');
+INSERT INTO `role_permission` VALUES (1698, '1001', '1030');
+INSERT INTO `role_permission` VALUES (1699, '1001', '1031');
+INSERT INTO `role_permission` VALUES (1700, '1001', '1032');
+INSERT INTO `role_permission` VALUES (1701, '1001', '1033');
+INSERT INTO `role_permission` VALUES (1702, '1001', '1034');
+INSERT INTO `role_permission` VALUES (1703, '1001', '1035');
+INSERT INTO `role_permission` VALUES (1704, '1001', '1036');
+INSERT INTO `role_permission` VALUES (1705, '1001', '1037');
+INSERT INTO `role_permission` VALUES (1706, '1001', '1038');
+INSERT INTO `role_permission` VALUES (1707, '1001', '1039');
+INSERT INTO `role_permission` VALUES (1708, '1001', '1040');
+INSERT INTO `role_permission` VALUES (1709, '1001', '1041');
+INSERT INTO `role_permission` VALUES (1710, '1001', '1042');
+INSERT INTO `role_permission` VALUES (1711, '1001', '1043');
+INSERT INTO `role_permission` VALUES (1712, '1001', '1044');
+INSERT INTO `role_permission` VALUES (1713, '1001', '1045');
+INSERT INTO `role_permission` VALUES (1714, '1001', '1046');
+INSERT INTO `role_permission` VALUES (1715, '1001', '1047');
+INSERT INTO `role_permission` VALUES (1716, '1001', '1048');
 
 -- ----------------------------
 -- Table structure for user
