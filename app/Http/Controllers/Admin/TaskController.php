@@ -32,21 +32,72 @@ class TaskController extends Controller
         $invoiceList = Invoice::all();
         $data = [];//符合条件的发票
         $new_date = strtotime('-1 day');//当前时间戳
-        $month_end_data = strtotime('+1 month');//一个月后的时间戳
+
         foreach ($invoiceList as $item) {
             $invoice_end = strtotime($item['ticket_day']);//当前发票截至时间
-            if ($invoice_end > $new_date && $invoice_end < $month_end_data) {
+
+            $thirty_day = 2592000;//60*60*24*30 三十天的时间戳
+            $three_day = 259200;
+
+            if ($invoice_end - $new_date > 0 && $invoice_end - $new_date < $thirty_day &&  $invoice_end - $new_date > $three_day ) {
+                unset($item['blank']);//空白字段留后
+                unset($item['created_at']);//导出不需要
+                unset($item['updated_at']);//导出不需要
+
+                $username = $item->invoiceUid->first()->username;//获取业务员名字
+                $item = json_decode(json_encode($item), true);//转为数组
+                unset($item['invoice_uid']);//因上执行方法数据中增加一个数组
+                $item['uid'] = $username;//直接用uid替换成业务员名字放到excl中显示
+
+                switch ($item['status']) {
+                    case 10:
+                        $item['status'] = '未开票';
+                        break;
+                    case 20:
+                        $item['status'] = '已开票';
+                        break;
+                    case 90:
+                        $item['status'] = '发票作废';
+                        break;
+                }
+
+                switch ($item['invoice_company']) {
+                    case 10:
+                        $item['invoice_company'] = '上海双于通信技术有限公司';
+                        break;
+                    case 20:
+                        $item['invoice_company'] = '深圳是方通信技术有限公司';
+                        break;
+                    case 30:
+                        $item['invoice_company'] = '江西双格通信技术有限公司';
+                        break;
+                }
+
+                switch ($item['invoice_type']) {
+                    case 10:
+                        $item['invoice_type'] = '普票';
+                        break;
+                    case 20:
+                        $item['invoice_type'] = '专票';
+                        break;
+                    case 30:
+                        $item['invoice_type'] = '收据';
+                        break;
+                }
                 $data[] = $item;
             }
-        }
-        $data = json_decode(json_encode($data), true);//查询对象转数组
 
-        if (empty($data)){
-            return false;
         }
+
+        $data = json_decode(json_encode($data), true);//查询对象转数组
+        if (empty($data)){
+            return '未查询到内容';
+        }
+
         //添加表头
         $arr = Invoice::$field;
         array_unshift($data, $arr);
+
 
         //使用数据生成xls     每日一次不用担心文件名重复问题
         $title = '次月合同期满客户Invoice-Email' . date('Y-m-d', time());
