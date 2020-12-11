@@ -95,7 +95,7 @@ class TaskController extends Controller
             }
 
         }
-        dd($data);
+
         $data = json_decode(json_encode($data), true);//查询对象转数组
         if (empty($data)) {
             return '未查询到内容';
