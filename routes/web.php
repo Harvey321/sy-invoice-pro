@@ -143,6 +143,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
 
     Route::any('/invoice/ExcelGet', 'InvoiceController@ExcelGet');//导出发票信息
 
+    Route::any('/invoice/search', 'InvoiceController@search');//发票列表页
+
+
 
 
 

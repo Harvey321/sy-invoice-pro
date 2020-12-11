@@ -23,34 +23,38 @@ class InvoiceController extends Controller
 
         $query = Invoice::orderBy('id', 'DESC');
 
-        //查询登录用户的信息
-        $user = User::where('id', session()->get('user')->id)->first();
-
-//        if (!empty($user->role[0]['sign'] == 'business')) {
-//            $query->where('business_name', $user->username);
-//        }
-
-        if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
-            $month_old = strtotime($request->all()['month_old']);
-            $month_new = strtotime($request->all()['month_new']);
+        if (isset($request->all()['invoice_company'])) {
+            $query->where('invoice_company', $request->all()['invoice_company']);
+            $data['invoice_company'] = $request->all()['invoice_company'];
         } else {
-            $month_old = strtotime('-1 month');
-            $month_new = strtotime('0 month');
+            $data['invoice_company'] = 10;
         }
 
-        $dataList = $query
-            ->whereBetween('ticket_month', [$month_old, $month_new])
+        if (isset($request->all()['crm_id'])) {
+            $query->where('crm_id', $request->all()['crm_id']);
+            $data['crm_id'] = $request->all()['crm_id'];
+        }
+
+        if (isset($request->all()['tax_num'])) {
+            $query->where('tax_num', $request->all()['tax_num']);
+            $data['tax_num'] = $request->all()['tax_num'];
+        }
+
+        if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
+            $data['month_old'] = strtotime($request->all()['month_old']);
+            $data['month_new'] = strtotime($request->all()['month_new']);
+        } else {
+            $data['month_old'] = strtotime('-1 month');
+            $data['month_new'] = strtotime('0 month');
+        }
+
+        $data['dataList'] = $query
+            ->whereBetween('ticket_month', [$data['month_old'], $data['month_new']])
             ->get();
 
-        return view(
-            'admin.invoice.index',
-            [
-                'title' => '发票列表',
-                'dataList' => $dataList,
-                'month_old' => $month_old,
-                'month_new' => $month_new,
-            ]
-        );
+        $data['title'] = '发票列表';
+
+        return view('admin.invoice.index', ['data' => $data]);
     }
 
     /**
@@ -179,44 +183,104 @@ class InvoiceController extends Controller
     {
         $query = Invoice::orderBy('id', 'DESC');
 
-        if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
-            $month_old = strtotime($request->all()['month_old']);
-            $month_new = strtotime($request->all()['month_new']);
+        if (isset($request->all()['invoice_company'])) {
+            $query->where('invoice_company', $request->all()['invoice_company']);
+            $data['invoice_company'] = $request->all()['invoice_company'];
         } else {
-            $month_old = strtotime(' - 1 month');
-            $month_new = strtotime('0 month');
+            $data['invoice_company'] = 10;
         }
 
-        $dataList = $query
-            ->whereBetween('ticket_month', [$month_old, $month_new])
+        if (isset($request->all()['crm_id'])) {
+            $query->where('crm_id', $request->all()['crm_id']);
+            $data['crm_id'] = $request->all()['crm_id'];
+        }
+
+        if (isset($request->all()['tax_num'])) {
+            $query->where('tax_num', $request->all()['tax_num']);
+            $data['tax_num'] = $request->all()['tax_num'];
+        }
+
+        if (isset($request->all()['month_old']) && isset($request->all()['month_new'])) {
+            $data['month_old'] = strtotime($request->all()['month_old']);
+            $data['month_new'] = strtotime($request->all()['month_new']);
+        } else {
+            $data['month_old'] = strtotime('-1 month');
+            $data['month_new'] = strtotime('0 month');
+        }
+
+        $data['dataList'] = $query
+            ->whereBetween('ticket_month', [$data['month_old'], $data['month_new']])
             ->get();
 
-        $dataList = json_decode(json_encode($dataList), true);
 
-        foreach ($dataList as $key => $value) {
+        foreach ($data['dataList'] as $key => $value) {
             unset($value['blank']);//空白字段留后
             unset($value['created_at']);//导出不需要
             unset($value['updated_at']);//导出不需要
 
+            $username = $value->invoiceUid->first()->username;//获取业务员名字
+            $value = json_decode(json_encode($value), true);//转为数组
+            unset($value['invoice_uid']);//因上执行方法数据中增加一个数组
+            $value['uid'] = $username;//直接用uid替换成业务员名字放到excl中显示
+
+            switch ($value['status']) {
+                case 10:
+                    $value['status'] = '未开票';
+                    break;
+                case 20:
+                    $value['status'] = '已开票';
+                    break;
+                case 90:
+                    $value['status'] = '发票作废';
+                    break;
+            }
+
+            switch ($value['invoice_company']) {
+                case 10:
+                    $value['invoice_company'] = '上海双于通信技术有限公司';
+                    break;
+                case 20:
+                    $value['invoice_company'] = '深圳是方通信技术有限公司';
+                    break;
+                case 30:
+                    $value['invoice_company'] = '江西双格通信技术有限公司';
+                    break;
+            }
+
+            switch ($value['invoice_type']) {
+                case 10:
+                    $value['invoice_type'] = '普票';
+                    break;
+                case 20:
+                    $value['invoice_type'] = '专票';
+                    break;
+                case 30:
+                    $value['invoice_type'] = '收据';
+                    break;
+            }
+
             foreach ($value as $k => $v) {
-//                if ($value['invoice_company']== )
                 $value[$k] = "\t" . $v . "\t";
             }
 
-            $dataList[$key] = $value;
-
-
+            $data['dataList'][$key] = $value;
         }
+
+        $data['dataList'] = json_decode(json_encode($data['dataList']), true);
 
         $arr = Invoice::$field;
 
-        array_unshift($dataList, $arr);
+        array_unshift($data['dataList'], $arr);
 
-        $title = date('Y.m', $month_old) . '-' . date('Y.m', $month_new) . '订单数据表';
-//        dump($title);
-//        dd($dataList);
+        $title = date('Y.m', $data['month_old']) . '-' . date('Y.m', $data['month_new']) . '订单数据表';
 
-        self::exportExcel($title, $dataList);
+        self::exportExcel($title, $data['dataList']);
+    }
+
+
+    public function search()
+    {
+        return view('admin.invoice.search');
     }
 
 }

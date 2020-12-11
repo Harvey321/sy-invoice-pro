@@ -235,10 +235,38 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/admin/invoice" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>查看发票</p>
+                                <a href="#" class="nav-link">
+{{--                                    <i class="far fa-circle nav-icon"></i>--}}
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>
+                                        查看发票
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
                                 </a>
+{{--                                <a href="/admin/invoice" class="nav-link">--}}
+{{--                                    <i class="far fa-circle nav-icon"></i>--}}
+{{--                                    <p>查看发票</p>--}}
+{{--                                </a>--}}
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/invoice?invoice_company=10" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>上海双于</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/invoice?invoice_company=20" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>深圳是方</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/invoice?invoice_company=30" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>江西双格</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             @if(in_array('App\Http\Controllers\Admin\InvoiceController@add',session()->get('permission')))
                                 <li class="nav-item">

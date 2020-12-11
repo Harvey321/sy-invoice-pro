@@ -41,40 +41,75 @@
                             <h3 class="card-title">发票列表</h3>
                         </div>
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col-10">
-                                    <form action="/" method="get">
+                            <form action="/" method="get">
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="input-group date d-flex flex-row align-items-center col-3"
+                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                        <label style="margin-right:20px;">开票公司:</label>
+                                        <select name="invoice_company" id="invoice_company" class="form-control">
+                                            <option value="10" {{$data['invoice_company'] == 10 ? 'selected':''}}>
+                                                上海双于通信技术有限公司
+                                            </option>
+                                            <option value="20" {{$data['invoice_company'] == 20 ? 'selected':''}}>
+                                                深圳是方通信技术有限公司
+                                            </option>
+                                            <option value="30" {{$data['invoice_company'] == 30 ? 'selected':''}}>
+                                                江西双格通信技术有限公司
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"
+                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" id="crm_id" name="crm_id"
+                                               value="{{isset($data['crm_id'])? $data['crm_id']:''}}"
+                                               class="form-control" placeholder="请输入crmID" maxlength="100"
+                                               onkeyup="this.value=this.value.trim()">
+                                    </div>
+                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"
+                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                        <label style="margin-right:20px;">税&nbsp;&nbsp;号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" id="tax_num" name="tax_num"
+                                               value="{{isset($data['tax_num'])? $data['tax_num']:''}}"
+                                               class="form-control" placeholder="请输入税号" maxlength="100"
+                                               onkeyup="this.value=this.value.trim()">
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="col-7">
                                         <div class="input-group date d-flex flex-row align-items-center"
                                              id="reservationdate-month" data-date-format="yyyy-mm-dd">
                                             <label style="margin-right:20px;">查询范围:</label>
                                             <input class='input-group date form-control datetimepicker-input input-group-append'
                                                    placeholder="请输入开票月份" style="width: 250px!important;"
                                                    type="month" name="month_old" id="month_old"
-                                                   value="{{isset($month_old) == true ? date('Y-m',$month_old) : date('Y-m',strtotime('-1 month'))}}"/>
+                                                   value="{{isset($data['month_old']) == true ? date('Y-m',$data['month_old']) : date('Y-m',strtotime('-1 month'))}}"/>
                                             <input class='input-group date form-control datetimepicker-input input-group-append'
                                                    placeholder="请输入开票月份" style="width: 250px"
                                                    type="month" name="month_new" id="month_new"
-                                                   value="{{isset($month_new) == true ? date('Y-m',$month_new) : date('Y-m',strtotime('0 month'))}}"/>
+                                                   value="{{isset($data['month_new']) == true ? date('Y-m',$data['month_new']) : date('Y-m',strtotime('0 month'))}}"/>
 
-                                            <button class="btn btn-default button-left-margin" href="/">搜索</button>
-                                            <a class="btn btn-info button-left-margin"
-                                               href="{{'/?month_old='.date('Y-m').'&month_new='.date('Y-m')}}">当前月</a>
-                                            <a class="btn btn-info button-left-margin"
-                                               href="{{'/?month_old='.date('Y-m', strtotime("-2 month")).'&month_new='.date('Y-m')}}">近三月</a>
-                                            <a class="btn btn-info button-left-margin"
-                                               href="{{'/?month_old='.date('Y-m', strtotime("-5 month")).'&month_new='.date('Y-m')}}">近半年</a>
-                                            <a class="btn btn-info button-left-margin"
-                                               href="{{'/?month_old='.date('Y-m', strtotime("-11 month")).'&month_new='.date('Y-m')}}">近一年</a>
+                                            <a class="btn btn-default button-left-margin"
+                                               onclick="setMonth({{'\''.date('Y-m') .'\''.',' . '\''. date('Y-m').'\''}})">当前月</a>
+                                            <a class="btn btn-default button-left-margin"
+                                               onclick="setMonth({{'\''.date('Y-m', strtotime("-2 month")) .'\''. ',' . '\''.date('Y-m').'\''}})">近三月</a>
+                                            <a class="btn btn-default button-left-margin"
+                                               onclick="setMonth({{'\''.date('Y-m', strtotime("-5 month")) .'\''. ',' . '\''. date('Y-m').'\''}})">近半年</a>
+                                            <a class="btn btn-default button-left-margin"
+                                               onclick="setMonth({{'\''.date('Y-m', strtotime("-11 month")) .'\''. ',' . '\''. date('Y-m').'\''}})">近一年</a>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="col-4 offset-1 d-flex flex-row justify-content-start">
+                                        <button class="btn btn-primary button-left-margin"
+                                                style="width: 130px;margin-right:30px;">搜&nbsp;&nbsp;索
+                                        </button>
+                                        <a class="btn btn-dark" style="width: 130px;color:white;" onclick="getUrl()">导出列表</a>
+                                    </div>
                                 </div>
-                                <div class="col-2 d-flex flex-row justify-content-end">
-                                    <button class="btn btn-info"><a onclick="getUrl()">导出当前票据</a></button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                         <div class="card-body">
-{{--                            style="overflow: scroll;"--}}
+                            {{--                            style="overflow: scroll;"--}}
                             <table id="example1" class="table table-bordered table-striped  ">
                                 <thead>
                                 <tr>
@@ -100,8 +135,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-<!--                                --><?php //dd($dataList); ?>
-                                @foreach($dataList as $item)
+                                <!--                                --><?php //dd($dataList); ?>
+                                @foreach($data['dataList'] as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
                                         <td>{{$item->crm_id}}</td>
@@ -112,7 +147,7 @@
                                         </td>
                                         <td>
                                             {{$item->invoiceUid->first()->username}}
-{{--                                            {{$item->uid}}--}}
+                                            {{--                                            {{$item->uid}}--}}
                                         </td>
                                         <td>{{$item->company_name}}</td>
                                         <td>{{$item->ticket_name}}</td>
@@ -165,8 +200,15 @@
     </section>
 
     <script>
+
+        function setMonth(month_old, month_new) {
+            $('#month_old').val(month_old);
+            $('#month_new').val(month_new);
+        }
+
         function getUrl() {
             let href = '/admin/invoice/ExcelGet' + window.location.search;
+            // console.log(href)
             window.location = href;
         }
 
@@ -183,9 +225,9 @@
                 "bSort": true, //是否可排序 
                 // "pagingType": "full_numbers",  //显示尾页和首页
                 "language": {
-                    'search': "搜索：",
+                    'search': "全表搜索：",
                     'infoEmpty': "",
-                    "emptyTable":"该范围内暂无数据",
+                    "emptyTable": "该范围内暂无数据",
                 },
                 "oLanguage": {  //语言转换
                     "sInfo": "显示第 _START_ - _END_ 项，共 _TOTAL_ 项",
