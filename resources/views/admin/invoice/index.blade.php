@@ -169,7 +169,27 @@
                                             {{$item->status == '20'?'已开票':''}}
                                             {{$item->status == '90'?'发票作废':''}}
                                         </td>
-                                        <td>{{$item->description}}</td>
+                                        <td class="description" onclick="edit_description(this)">
+                                            <span class="description_span">{{$item->description}}</span>
+                                            <input style="display:none;" type="text"
+                                                   id="description_{{$item->id}}_{{$item->crm_id}}"
+                                                   class="description_input" name="description"
+                                                   value="" onblur="sub_description(this)"/>
+                                        </td>
+
+
+
+{{--                                        <td class="product_name" onclick="edit_product_name(this)">--}}
+
+{{--                                            <span class="product_name_span">{{$item->pivot->name}}</span>--}}
+{{--                                            <input style="display:none;" type="text"--}}
+{{--                                                   id="product_name_{{$item->pivot->id}}"--}}
+{{--                                                   class="product_name_input" name="product_name"--}}
+{{--                                                   value="" onblur="sub_product_name(this)"/>--}}
+
+{{--                                        </td>--}}
+
+
                                         {{--                                        <td>{{$item->created_at}}</td>--}}
                                         <td>
                                             <a href="/admin/invoice/edit?id={{$item->id}}"
@@ -244,7 +264,6 @@
 
         });
 
-
         function setDelUrl(id) {
             let url = '/admin/invoice/delete?id=' + id;
             $('#url').val(url);  //给会话中的隐藏属性URL赋值
@@ -282,6 +301,96 @@
                 location.reload();
             }, 2000);
         }
+
+        //点击名称 表格变表单
+        function edit_description(obj) {
+            $(obj).children('span').css('display', 'none');//span消失
+            $(obj).children('input').css('display', 'block');//换成表单
+            $(obj).children('input').val($(obj).children('span').html()); //span内容赋值给表单
+            $(obj).children('input').focus();
+
+            // $(obj).children('input').change(function () {//表单改变事件
+            // $(obj).children('span').html(this.value)//每次表单输入内容重新赋值给span
+            // });
+            //** 修改产品名
+            $(obj).children('input').unbind('keypress').bind('keypress', function (e) {//表单回车事件
+                let id = $(obj).children('input').attr('id').split("_")[1]; //获取发票id
+                // let crm_id = $(obj).children('input').attr('id').split("_")[2];
+
+                if (e.which == 13) {
+                    $(obj).children('span').html($(obj).children('input').val());//表单值赋值给span
+                    $(obj).children('input').css('display', 'none');//表单消失
+                    $(obj).children('span').css('display', 'block');//span出现
+                    $.ajax({
+                        type: "get",
+                        url: "/admin/invoice/update",
+                        dataType: 'json',
+                        data: {
+                            'id': id,
+                            // 'crm_id': crm_id,
+                            'description': $(obj).children('input').val()
+                        },
+                        success: function (data) {
+                            if (data.status == 1) {
+                                toastr.success(data.message)
+                                // setTimeout(function () {
+                                //     window.location = '/customer/product';
+                                // }, 1000)
+                            }
+                            if (data.status == 0) {
+                                toastr.error(data.message)
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data)
+                        }
+                    })
+                }
+            })
+
+
+            // $(obj).children('input').keypress(function (e) {//表单回车事件
+            //     let id = $(obj).children('input').attr('id').split("_")[2]; //获取产品id
+            //
+            //     if(e.which == 13){
+            //         console.log(123)
+            //         $(obj).children('span').html($(obj).children('input').val());//表单值赋值给span
+            //         $(obj).children('input').css('display', 'none');//表单消失
+            //         $(obj).children('span').css('display', 'block');//span出现
+            //         $.ajax({
+            //             type: "get",
+            //             url: "/customer/product/update",
+            //             dataType: 'json',
+            //             data: {
+            //                 'id': id,
+            //             },
+            //             success: function (data) {
+            //                 if (data.status == 1) {
+            //                     toastr.success(data.message)
+            //                     setTimeout(function () {
+            //                         window.location = '/customer/product';
+            //                     }, 1000)
+            //                 }
+            //                 if (data.status == 0) {
+            //                     toastr.error(data.message)
+            //                 }
+            //             },
+            //             error: function (data) {
+            //                 console.log(data)
+            //             }
+            //         })
+            //     }
+            // })
+        }
+
+        //表单失焦 提交产品名
+        function sub_description(object) {
+            let obj = $(object).parent();//获取td单元格 表单的父级元素
+            // $(obj).children('span').html($(object).val());//表单失焦时 表单值赋值给span
+            $(obj).children('input').css('display', 'none');//表单消失
+            $(obj).children('span').css('display', 'block');//span出现
+        }
+
 
     </script>
 

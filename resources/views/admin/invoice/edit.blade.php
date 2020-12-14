@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">开票公司:</label>
-                            <select name="invoice_company" id="invoice_company" class="form-control">
+                            <select name="invoice_company" id="invoice_company" class="form-control" disabled>
                                 <option value="10" {{$data->invoice_company == 10 ? 'selected' : ''}}>上海双于通信技术有限公司</option>
                                 <option value="20" {{$data->invoice_company == 20 ? 'selected' : ''}}>深圳是方通信技术有限公司	</option>
                                 <option value="30" {{$data->invoice_company == 30 ? 'selected' : ''}}>江西双格通信技术有限公司	</option>
@@ -82,7 +82,7 @@
                             <select name="invoice_type" id="invoice_type" class="form-control">
                                 <option value="10" {{$data->invoice_type == 10 ? 'selected' : ''}}>普票</option>
                                 <option value="20" {{$data->invoice_type == 20 ? 'selected' : ''}}>专票</option>
-                                <option value="90" {{$data->invoice_type == 30 ? 'selected' : ''}}>收据</option>
+                                <option value="30" {{$data->invoice_type == 30 ? 'selected' : ''}}>收据</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -135,10 +135,10 @@
 
                     <div class="card-footer"
                          style="display: flex;flex-direction: row;justify-content: space-around">
-                        <div type="submit" id="getDate" onclick="dataUpdate({{$data->id}})"
+                        <div id="getDate" onclick="dataUpdate({{$data->id}})"
                              class="btn btn-block btn-primary">提交
                         </div>
-                        <button type="reset" onclick="resetForm()" class="btn btn-block btn-outline-secondary"
+                        <button type="reset" class="btn btn-block btn-outline-secondary"
                                 style="margin-top:0;">
                             重置
                         </button>
@@ -153,6 +153,7 @@
     <script>
         function dataUpdate(id) {
             let data = $('form').serializeArray();
+            data.push({name:'crm_id',value:$('#crm_id').val()})
 
             $.ajax({
                 type: "post",

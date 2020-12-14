@@ -152,17 +152,54 @@ class InvoiceController extends Controller
     public function update()
     {
         $formData = request()->except('_token', 's');
-        $formData['ticket_month'] = strtotime($formData['ticket_month']);
 
-        $res = Invoice::where('id', $formData['id'])->update($formData);
-
-        if ($res) {
-            $data = ['status' => 1, 'message' => '发票修改成功'];
-        } else {
-            $data = ['status' => 0, 'message' => '发票修改失败'];
+        if (isset($formData['ticket_month'])) {
+            $formData['ticket_month'] = strtotime($formData['ticket_month']);
         }
 
-        return $data;
+        //如果没有设置crmid 那就是修改对应id的单条的备注信息
+        if (!isset($formData['crm_id'])) {
+            $res = Invoice::where('id', $formData['id'])->update($formData);//更新单条
+            if (!$res) {
+                return ['status' => 0, 'message' => '发票修改失败'];
+            }
+            return ['status' => 1, 'message' => '发票修改成功'];
+        }
+
+        //如果设置了crm_id  修改一部分整体修改的信息  然后在修改一部分当条数据
+
+        //获取所有相同crm_id的发票
+        $dataList = Invoice::where('crm_id', $formData['crm_id'])->get();
+        $dataList = json_decode(json_encode($dataList), true);//转为数组
+
+        //需要整体修改的信息
+        if (isset($formData['company_name'])){
+            $tmp['company_name'] = $formData['company_name']; //公司名
+        }
+        $tmp['ticket_name'] = $formData['ticket_name']; //开票名
+        $tmp['tax_num'] = $formData['tax_num'];//税号
+        $tmp['address_mobile'] = $formData['address_mobile'];//地址/电话
+        $tmp['bank_account'] = $formData['bank_account'];//开户行/账户
+        $tmp['money'] = $formData['money'];//金额
+        $tmp['ticket_day'] = $formData['ticket_day'];//到期提醒日
+
+        //遍历所有比当前开票月份大的发票 对其进行整体修改
+        foreach ($dataList as $item) {
+            if ($item['ticket_month'] >= $formData['ticket_month']) {
+                $res = Invoice::where('id', $item['id'])->update($tmp);
+                if (!$res) {
+                    return ['status' => 0, 'message' => '发票修改失败'];
+                }
+            }
+        }
+
+        $res = Invoice::where('id', $formData['id'])->update($formData);
+        if (!$res) {
+            return ['status' => 0, 'message' => '发票修改失败'];
+        }
+
+        return ['status' => 1, 'message' => '发票修改成功'];
+
     }
 
     /**
