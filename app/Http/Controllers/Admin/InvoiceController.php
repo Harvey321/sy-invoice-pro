@@ -23,6 +23,11 @@ class InvoiceController extends Controller
 
         $query = Invoice::orderBy('id', 'DESC');
 
+        //获取用户的角色id  当用户为业务员时  给定只显示业务绑定的合同
+        if (session()->get('user')->role->first()->pivot->rid == 1003) {
+            $query->where('uid', session()->get('user')->role->first()->pivot->uid);
+        }
+
         if (isset($request->all()['invoice_company'])) {
             $query->where('invoice_company', $request->all()['invoice_company']);
             $data['invoice_company'] = $request->all()['invoice_company'];
@@ -87,8 +92,12 @@ class InvoiceController extends Controller
             $obj->bank_account = $formData['bank_account'];
             $obj->money = $formData['money'];
             $obj->invoice_type = $formData['invoice_type'];
-            $obj->express = $formData['express'];
-            $obj->express_num = $formData['express_num'];
+            if (isset($formData['express'])) {
+                $obj->express = $formData['express'];
+            }
+            if (isset($formData['express_num'])) {
+                $obj->express_num = $formData['express_num'];
+            }
             $obj->ticket_month = strtotime($formData['yearMonth'][$i]);
             $obj->ticket_day = $formData['ticket_day'];
             $obj->save();
@@ -173,9 +182,10 @@ class InvoiceController extends Controller
         $dataList = json_decode(json_encode($dataList), true);//转为数组
 
         //需要整体修改的信息
-        if (isset($formData['company_name'])){
+        if (isset($formData['company_name'])) {
             $tmp['company_name'] = $formData['company_name']; //公司名
         }
+        $tmp['invoice_type'] = $formData['invoice_type'];//发票类型
         $tmp['ticket_name'] = $formData['ticket_name']; //开票名
         $tmp['tax_num'] = $formData['tax_num'];//税号
         $tmp['address_mobile'] = $formData['address_mobile'];//地址/电话
@@ -193,11 +203,7 @@ class InvoiceController extends Controller
             }
         }
 
-        $res = Invoice::where('id', $formData['id'])->update($formData);
-        if (!$res) {
-            return ['status' => 0, 'message' => '发票修改失败'];
-        }
-
+        Invoice::where('id', $formData['id'])->update($formData);
         return ['status' => 1, 'message' => '发票修改成功'];
 
     }
@@ -260,6 +266,8 @@ class InvoiceController extends Controller
             unset($value['invoice_uid']);//因上执行方法数据中增加一个数组
             $value['uid'] = $username;//直接用uid替换成业务员名字放到excl中显示
 
+            $value['ticket_month'] = date('Y-m', $value['ticket_month']);
+
             switch ($value['status']) {
                 case 10:
                     $value['status'] = '未开票';
@@ -296,7 +304,11 @@ class InvoiceController extends Controller
                     break;
             }
 
+
             foreach ($value as $k => $v) {
+                if ($k == 'money') {
+                    continue;
+                }
                 $value[$k] = "\t" . $v . "\t";
             }
 

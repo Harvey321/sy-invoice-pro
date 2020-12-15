@@ -31,8 +31,8 @@
                             <label for="exampleInputEmail1">开票公司:</label>
                             <select name="invoice_company" id="invoice_company" class="form-control">
                                 <option value="10">上海双于通信技术有限公司</option>
-                                <option value="20">深圳是方通信技术有限公司</option>
-                                <option value="30">江西双格通信技术有限公司</option>
+                                <option value="20">深圳是方科技有限公司</option>
+                                <option value="30">江西双格科技有限公司</option>
                             </select>
                         </div>
 
@@ -90,18 +90,18 @@
                                 <option value="30">收据</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">快递信息:</label>
-                            <input type="text" id="express" name="express" value=""
-                                   class="form-control" placeholder="请输入快递信息" maxlength="180"
-                                   onkeyup="this.value=this.value.trim()">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">快递单号:</label>
-                            <input type="text" id="express_num" name="express_num" value=""
-                                   class="form-control" placeholder="请输入快递单号" maxlength="100"
-                                   onkeyup="this.value=this.value.trim()">
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="exampleInputEmail1">快递信息:</label>--}}
+{{--                            <input type="text" id="express" name="express" value=""--}}
+{{--                                   class="form-control" placeholder="请输入快递信息" maxlength="180"--}}
+{{--                                   onkeyup="this.value=this.value.trim()">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="exampleInputEmail1">快递单号:</label>--}}
+{{--                            <input type="text" id="express_num" name="express_num" value=""--}}
+{{--                                   class="form-control" placeholder="请输入快递单号" maxlength="100"--}}
+{{--                                   onkeyup="this.value=this.value.trim()">--}}
+{{--                        </div>--}}
                         <div class="form-group">
                             <label>开票月份:</label>
                             <div class="row" id="myTime">

@@ -24,8 +24,8 @@
                             <label for="exampleInputEmail1">开票公司:</label>
                             <select name="invoice_company" id="invoice_company" class="form-control" disabled>
                                 <option value="10" {{$data->invoice_company == 10 ? 'selected' : ''}}>上海双于通信技术有限公司</option>
-                                <option value="20" {{$data->invoice_company == 20 ? 'selected' : ''}}>深圳是方通信技术有限公司	</option>
-                                <option value="30" {{$data->invoice_company == 30 ? 'selected' : ''}}>江西双格通信技术有限公司	</option>
+                                <option value="20" {{$data->invoice_company == 20 ? 'selected' : ''}}>深圳是方科技有限公司</option>
+                                <option value="30" {{$data->invoice_company == 30 ? 'selected' : ''}}>江西双格科技有限公司</option>
                             </select>
                         </div>
 
