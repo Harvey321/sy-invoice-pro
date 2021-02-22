@@ -127,6 +127,7 @@
                                     <th class="none">快递信息</th>
                                     <th class="none">快递单号</th>
                                     <th>开票月份</th>
+                                    <th>收款金额</th>
                                     <th class="none">到期提醒日</th>
                                     <th class="none">状态</th>
                                     <th>备注</th>
@@ -163,6 +164,7 @@
                                         <td>{{$item->express}}</td>
                                         <td>{{$item->express_num}}</td>
                                         <td>{{ date('Y-m',$item->ticket_month) }}</td>
+                                        <td>{{$item->collection}}</td>
                                         <td>{{$item->ticket_day}}</td>
                                         <td>
                                             {{$item->status == '10'?'未开票':''}}

@@ -38,7 +38,7 @@ class Invoice extends Model
         'ticket_month',  //开票月份
         'ticket_day',  //到期提醒日
         'description',  //备注
-        'blank',  //空字段预留
+        'collection',  //收款金额
         'status',  //10未开票/20已开票/90发票作废
         'created_at',
         'updated_at'
@@ -63,7 +63,7 @@ class Invoice extends Model
         '开票月份',
         '到期提醒日',
         '备注',
-//        '空字段预留',
+        '收款金额',
         '状态',
     ];
 

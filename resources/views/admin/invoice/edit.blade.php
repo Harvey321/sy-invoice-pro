@@ -129,6 +129,12 @@
                                 <option value="90" {{$data->status == 90 ? 'selected' : ''}}>发票作废</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">收款金额:</label>
+                            <input type="text" id="collection" name="collection" value="{{$data->collection}}"
+                                   class="form-control" placeholder="请输入收款金额" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
 
                         <input type="hidden" name="id" value="{{$data->id}}">
                     </div>
