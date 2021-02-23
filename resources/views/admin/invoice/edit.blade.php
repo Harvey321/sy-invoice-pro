@@ -133,6 +133,7 @@
                             <label for="exampleInputEmail1">收款金额:</label>
                             <input type="text" id="collection" name="collection" value="{{$data->collection}}"
                                    class="form-control" placeholder="请输入收款金额" maxlength="100"
+                                   {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}
                                    onkeyup="this.value=this.value.trim()">
                         </div>
 
