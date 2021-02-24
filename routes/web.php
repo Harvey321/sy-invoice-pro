@@ -146,6 +146,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
     Route::any('/invoice/search', 'InvoiceController@search');//发票列表页
 
 
+    Route::any('/invoice/uploadFile', 'InvoiceController@uploadFile');//导入发票文件
+
+
 
 
 

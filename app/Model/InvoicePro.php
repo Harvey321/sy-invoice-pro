@@ -4,12 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class InvoicePro extends Model
 {
     /**
      * 与模型关联的数据表
      */
-    protected $table = 'invoice';
+    protected $table = 'invoice_pro';
 
     /**
      * 主键
@@ -23,11 +23,9 @@ class Invoice extends Model
 
     //开启白名单
     protected $guarded = [
-        'crm_id',  //crmId
-        'uid',  //业务员Id
-        'u_name', //业务员名
-        'num',//序号
+        'num',  //序号
         'invoice_company',  //开票公司 10上海双于/20深圳是方/30江西双格
+        'u_name',  //业务员名
         'company_name',  //公司名
         'ticket_name',  //开票名
         'tax_num',  //税号
@@ -50,11 +48,9 @@ class Invoice extends Model
     //字段名
     public static $field = [
         'ID',
-        'crmID',
-        '业务员ID',  //业务员Id
-        '业务员名', //业务员名
-        '序号',//序号
+        '序号',
         '开票公司',
+        '业务员名',
         '公司名',
         '开票名',
         '税号',
@@ -70,34 +66,6 @@ class Invoice extends Model
         '收款金额',
         '状态',
     ];
-    //字段名*20
-    public static $fieldEnglish = [
-        'id',
-        'crm_id',  //crmId
-        'uid',  //业务员Id
-        'u_name', //业务员名
-        'num',//序号
-        'invoice_company',  //开票公司 10上海双于/20深圳是方/30江西双格
-        'company_name',  //公司名
-        'ticket_name',  //开票名
-        'tax_num',  //税号
-        'address_mobile',  //地址/电话
-        'bank_account',  //开户行/账户
-        'money',  //金额
-        'invoice_type',  //发票类型 10普票/20专票/30收据
-        'express',  //快递信息
-        'express_num',  //快递单号
-        'ticket_month',  //开票月份
-        'ticket_day',  //到期提醒日
-        'description',  //备注
-        'collection',  //收款金额
-        'status',  //10未开票/20已开票/90发票作废
-    ];
-
-    public function invoiceUid()
-    {
-        return $this->hasMany('App\Model\Admin\User', 'id', 'uid');
-    }
 
 
 }

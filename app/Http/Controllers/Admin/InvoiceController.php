@@ -7,7 +7,9 @@ use App\Http\Controllers\MailController;
 use App\Model\Admin\Role;
 use App\Model\Admin\User;
 use App\Model\Invoice;
+use App\Model\InvoicePro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
@@ -38,6 +40,11 @@ class InvoiceController extends Controller
         if (isset($request->all()['crm_id'])) {
             $query->where('crm_id', $request->all()['crm_id']);
             $data['crm_id'] = $request->all()['crm_id'];
+        }
+
+        if (isset($request->all()['num'])) {
+            $query->where('num', $request->all()['num']);
+            $data['num'] = $request->all()['num'];
         }
 
         if (isset($request->all()['tax_num'])) {
@@ -84,7 +91,10 @@ class InvoiceController extends Controller
             $obj = new Invoice();
             $obj->crm_id = $formData['crm_id'];
             $obj->invoice_company = $formData['invoice_company'];
-            $obj->uid = $formData['uid'];
+            $users = explode("-", $formData['uid']);
+            $obj->uid = $users[0];
+            $obj->u_name = $users[1];
+            $obj->num = $formData['num'];
             $obj->company_name = $formData['company_name'];
             $obj->ticket_name = $formData['ticket_name'];
             $obj->tax_num = $formData['tax_num'];
@@ -92,6 +102,7 @@ class InvoiceController extends Controller
             $obj->bank_account = $formData['bank_account'];
             $obj->money = $formData['money'];
             $obj->invoice_type = $formData['invoice_type'];
+            $obj->collection = $formData['collection'];
             if (isset($formData['express'])) {
                 $obj->express = $formData['express'];
             }
@@ -238,6 +249,11 @@ class InvoiceController extends Controller
             $data['crm_id'] = $request->all()['crm_id'];
         }
 
+        if (isset($request->all()['num'])) {
+            $query->where('num', $request->all()['num']);
+            $data['num'] = $request->all()['num'];
+        }
+
         if (isset($request->all()['tax_num'])) {
             $query->where('tax_num', $request->all()['tax_num']);
             $data['tax_num'] = $request->all()['tax_num'];
@@ -255,16 +271,17 @@ class InvoiceController extends Controller
             ->whereBetween('ticket_month', [$data['month_old'], $data['month_new']])
             ->get();
 
-
         foreach ($data['dataList'] as $key => $value) {
-            unset($value['blank']);//空白字段留后
             unset($value['created_at']);//导出不需要
             unset($value['updated_at']);//导出不需要
 
-            $username = $value->invoiceUid->first()->username;//获取业务员名字
+//            $username = $value->invoiceUid->first()->username;//获取业务员名字
             $value = json_decode(json_encode($value), true);//转为数组
-            unset($value['invoice_uid']);//因上执行方法数据中增加一个数组
-            $value['uid'] = $username;//直接用uid替换成业务员名字放到excl中显示
+//            unset($value['invoice_uid']);//因上执行方法数据中增加一个数组
+//            $value['uid'] = $username;//直接用uid替换成业务员名字放到excl中显示
+
+
+
 
             $value['ticket_month'] = date('Y-m', $value['ticket_month']);
 
@@ -317,12 +334,13 @@ class InvoiceController extends Controller
 
         $data['dataList'] = json_decode(json_encode($data['dataList']), true);
 
-        $arr = Invoice::$field;
+        $arr_one = Invoice::$field;
+        $arr_two = Invoice::$fieldEnglish;
 
-        array_unshift($data['dataList'], $arr);
+        array_unshift($data['dataList'], $arr_one);
+        array_unshift($data['dataList'], $arr_two);
 
         $title = date('Y.m', $data['month_old']) . '-' . date('Y.m', $data['month_new']) . '订单数据表';
-
         self::exportExcel($title, $data['dataList']);
     }
 
@@ -331,5 +349,134 @@ class InvoiceController extends Controller
     {
         return view('admin.invoice.search');
     }
+
+
+    /**
+     * 导入发票(number条)
+     * @return bool&number  false失败 或 成功多少条
+     */
+    public function uploadFile()
+    {
+        $file = $_FILES['file'];
+        //判断是否上传文件
+        if ($file['error'] != 4) {
+            // 允许上传的后缀
+            $allowedExts = array("xlsx", "xls");
+
+            //分割字符
+            $temp = explode(".", $file["name"]);
+
+            // 获取文件后缀名
+            $extension = end($temp);
+
+            //判断上传条件
+            if (in_array($extension, $allowedExts)) {
+
+                //判断上传的文件是否错误
+                if ($file["error"] > 0) {
+                    return false;
+                } else {
+                    $res = 0;
+                    //导入excel
+                    Excel::load(iconv('UTF-8', 'GBK', $file['tmp_name']), function ($reader) use (&$res) {
+                        $data = $reader->all()->toArray();
+                        array_shift($data);
+
+                        foreach ($data as $item) {
+
+                            //如查询到序号 则说明已经添加则返回false; 不让添加继续;直接跳过
+                            $data = Invoice::where('num', trim($item['num'], "\t"))->first();
+                            if ($data != null) {
+                                continue;
+                            }
+                            $obj = new Invoice();
+                            $obj->num = trim($item['num'], "\t");
+                            $obj->invoice_company = trim($item['invoice_company'], "\t");
+                            switch (trim($item['invoice_company'], "\t")) {
+                                case '上海双于通信技术有限公司':
+                                    $obj->status = 10;
+                                    break;
+                                case '深圳是方科技有限公司':
+                                    $obj->status = 20;
+                                    break;
+                                case '江西双格科技有限公司':
+                                    $obj->status = 30;
+                                    break;
+                            }
+
+                            $obj->uid = trim($item['uid'], "\t");
+                            $obj->u_name = trim($item['u_name'], "\t");
+                            $obj->company_name = trim($item['company_name'], "\t");
+                            $obj->ticket_name = trim($item['ticket_name'], "\t");
+                            $obj->tax_num = trim($item['tax_num'], "\t");
+                            $obj->address_mobile = trim($item['address_mobile'], "\t");
+                            $obj->bank_account = trim($item['bank_account'], "\t");
+                            $obj->money = trim($item['money'], "\t");
+
+                            switch (trim($item['invoice_type'], "\t")) {
+                                case '普票':
+                                    $obj->status = 10;
+                                    break;
+                                case '专票':
+                                    $obj->status = 20;
+                                    break;
+                                case '收据':
+                                    $obj->status = 30;
+                                    break;
+                            }
+
+                            $obj->express = trim($item['express'], "\t");
+                            $obj->express_num = trim($item['express_num'], "\t");
+                            $obj->ticket_month = trim($item['ticket_month'], "\t");
+                            $obj->ticket_day = trim($item['ticket_day'], "\t");
+                            $obj->description = trim($item['description'], "\t");
+                            $obj->collection = trim($item['collection'], "\t");
+
+                            switch (trim($item['status'], "\t")) {
+                                case '未开票':
+                                    $obj->status = 10;
+                                    break;
+                                case '已开票':
+                                    $obj->status = 20;
+                                    break;
+                                case '发票作废':
+                                    $obj->status = 90;
+                                    break;
+                            }
+
+                            $obj->save();
+                            $res++;
+                        }
+
+                    });
+                    return json_encode(['status'=>'success','data'=>$res]);
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+
+
+    }
+
+    /**
+     * 导入excel数据
+     * @param $title
+     * @param $list
+     */
+    public function importExcel($fileAddress)
+    {
+        Excel::load(iconv('UTF-8', 'GBK', $fileAddress), function ($reader) {
+            $data = $reader->all()->toArray();
+            foreach ($data as $item) {
+                dump($item);
+            }
+        });
+    }
+
 
 }

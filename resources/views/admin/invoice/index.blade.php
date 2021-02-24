@@ -41,7 +41,7 @@
                             <h3 class="card-title">发票列表</h3>
                         </div>
                         <div class="card-header">
-                            <form action="/" method="get">
+                            <form action="/" method="get" enctype="multipart/form-data">
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="input-group date d-flex flex-row align-items-center col-3"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
@@ -58,14 +58,24 @@
                                             </option>
                                         </select>
                                     </div>
+{{--                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"--}}
+{{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
+{{--                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>--}}
+{{--                                        <input type="text" id="crm_id" name="crm_id"--}}
+{{--                                               value="{{isset($data['crm_id'])? $data['crm_id']:''}}"--}}
+{{--                                               class="form-control" placeholder="请输入crmID" maxlength="100"--}}
+{{--                                               onkeyup="this.value=this.value.trim()">--}}
+{{--                                    </div>--}}
+
                                     <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <input type="text" id="crm_id" name="crm_id"
-                                               value="{{isset($data['crm_id'])? $data['crm_id']:''}}"
-                                               class="form-control" placeholder="请输入crmID" maxlength="100"
+                                        <label style="margin-right:20px;">序号:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" id="num" name="num"
+                                               value="{{isset($data['num'])? $data['num']:''}}"
+                                               class="form-control" placeholder="请输入序号" maxlength="100"
                                                onkeyup="this.value=this.value.trim()">
                                     </div>
+
                                     <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
                                         <label style="margin-right:20px;">税&nbsp;&nbsp;号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -103,7 +113,25 @@
                                         <button class="btn btn-primary button-left-margin"
                                                 style="width: 130px;margin-right:30px;height: 38px;">搜&nbsp;&nbsp;索
                                         </button>
-                                        <a class="btn btn-dark" style="width: 130px;color:white;height: 38px;" onclick="getUrl()">导出列表</a>
+                                        <a class="btn btn-dark"
+                                           style="width: 130px;color:white;height: 38px;margin-right:30px;"
+                                           onclick="getUrl()">导&nbsp;&nbsp;出</a>
+                                        {{--                                        <a class="btn btn-default" style="width: 130px;height: 38px;"--}}
+                                        {{--                                           onclick="setUrl()">导入表</a>--}}
+                                        {{--                                        <input type="file" name="files" id="fileTable" style="display: none;">--}}
+
+
+                                        <input type="file" name="upload" id="upload" style="display: none;"/>
+                                        <input class="btn btn-default"
+                                               style="width: 130px;height: 38px;margin-right:30px;"
+                                               type="button" id="uploadFileButton" value="导&nbsp;&nbsp;入"/>
+
+                                        {{--                                        <div class="custom-file">--}}
+                                        {{--                                            <input type="file" class="custom-file-input file-loading" id="topology_url" name="topology_url">--}}
+                                        {{--                                            <label class="custom-file-label" for="exampleInputFile" style="overflow: hidden">选择文件(2M以内)</label>--}}
+                                        {{--                                        </div>--}}
+
+
                                     </div>
                                 </div>
                             </form>
@@ -114,12 +142,13 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>crmID</th>
+{{--                                    <th>crmID</th>--}}
+                                    <th>序号</th>
                                     <th class="none">开票公司</th>
-                                    <th >业务员名</th>
+                                    <th>业务员名</th>
                                     <th>公司名</th>
                                     <th>开票名</th>
-                                    <th >税号</th>
+                                    <th>税号</th>
                                     <th>地址/电话</th>
                                     <th>开户行/账户</th>
                                     <th>金额</th>
@@ -140,7 +169,8 @@
                                 @foreach($data['dataList'] as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
-                                        <td>{{$item->crm_id}}</td>
+{{--                                        <td>{{$item->crm_id}}</td>--}}
+                                        <td>{{$item->num}}</td>
                                         <td>
                                             {{$item->invoice_company == '10'?'上海双于通信技术有限公司':''}}
                                             {{$item->invoice_company == '20'?'深圳是方科技有限公司':''}}
@@ -180,16 +210,15 @@
                                         </td>
 
 
+                                        {{--                                        <td class="product_name" onclick="edit_product_name(this)">--}}
 
-{{--                                        <td class="product_name" onclick="edit_product_name(this)">--}}
+                                        {{--                                            <span class="product_name_span">{{$item->pivot->name}}</span>--}}
+                                        {{--                                            <input style="display:none;" type="text"--}}
+                                        {{--                                                   id="product_name_{{$item->pivot->id}}"--}}
+                                        {{--                                                   class="product_name_input" name="product_name"--}}
+                                        {{--                                                   value="" onblur="sub_product_name(this)"/>--}}
 
-{{--                                            <span class="product_name_span">{{$item->pivot->name}}</span>--}}
-{{--                                            <input style="display:none;" type="text"--}}
-{{--                                                   id="product_name_{{$item->pivot->id}}"--}}
-{{--                                                   class="product_name_input" name="product_name"--}}
-{{--                                                   value="" onblur="sub_product_name(this)"/>--}}
-
-{{--                                        </td>--}}
+                                        {{--                                        </td>--}}
 
 
                                         {{--                                        <td>{{$item->created_at}}</td>--}}
@@ -233,6 +262,68 @@
             // console.log(href)
             window.location = href;
         }
+
+        function setUrl() {
+            $('fileTable').open;
+
+        }
+
+
+        //上传
+        $('#uploadFileButton').click(function () {
+            $('#upload').click();
+        });
+        $('#upload').click(function () {
+            $('#upload').val('');
+        });
+        $('#upload').on('change', function () {
+            var formData = new FormData();
+            var file = $('#upload')[0].files[0]
+            formData.append('file', file);
+            formData.append('_token', '{{csrf_token()}}');
+
+            $.ajax({
+                type: "POST",
+                url: "invoice/uploadFile",
+                data: formData,
+                dataType: 'JSON',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.status === 'success') {
+                        if(data.data == 0){
+                            alert("导入成功,暂无需要增加条目");
+                        }
+                        alert("导入成功" + data.data + '条');
+                    }
+                    window.location.reload();
+                },
+                error: function (data) {
+                    alert('导入失败');
+                    // 请求失败后要执行的代码
+                }
+            });
+
+
+            // var fileNameStr = $('#upload').val();
+            //
+            // var index2 = fileNameStr.length;
+            //
+            // if (fileNameStr.indexOf("/") != -1) {
+            //     var index1 = fileNameStr.lastIndexOf("/");
+            // } else {
+            //     var index1 = fileNameStr.lastIndexOf("\\");
+            // }
+            //
+            // if (index1 <= -1) {
+            //     index1 = 0;
+            // } else {
+            //     index1 += 1;
+            // }
+            //
+            // fileNameStr = fileNameStr.substring(index1, index2);
+
+        });
 
         $(function () {
             $("#example1").DataTable({

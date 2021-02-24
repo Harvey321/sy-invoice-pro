@@ -27,6 +27,13 @@
                                    class="form-control" placeholder="请输入crmID" maxlength="100"
                                    onkeyup="this.value=this.value.trim()">
                         </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">序号:</label>
+                            <input type="text" id="num" name="num" value=""
+                                   class="form-control" placeholder="请输入序号" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">开票公司:</label>
                             <select name="invoice_company" id="invoice_company" class="form-control">
@@ -41,7 +48,7 @@
                             <label for="exampleInputEmail1">业务员:</label>
                             <select name="uid" id="uid" class="form-control">
                                 @foreach($user as $item)
-                                    <option value="{{$item->id}}">{{$item->username}}</option>
+                                    <option value="{{$item->id.'-'.$item->username}}">{{$item->username}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -130,6 +137,14 @@
                                        type="date" name="ticket_day" id="ticket_day" value=""/>
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">收款金额:</label>
+                            <input type="text" id="collection" name="collection" value=""
+                                   class="form-control" placeholder="请输入收款金额（已收请填写）" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()">
+                        </div>
                     </div>
                     <div class="card-footer"
                          style="display: flex;flex-direction: row;justify-content: space-around">
@@ -177,31 +192,6 @@
             })
         })
 
-        function formVerification() {
-
-            //表单验证
-            if ($('#sn').val() == '') {
-                toastr.error('请输入产品id/序列号')
-                return false;
-            }
-            if ($('#invoice_name').val() == '') {
-                toastr.error('请输入产品名称')
-                return false;
-            }
-            if ($('#model').val() == '') {
-                toastr.error('请输入产品型号')
-                return false;
-            }
-            if ($('#address').val() == '') {
-                toastr.error('请输入安装地')
-                return false;
-            }
-            if ($('#rate').val() == '') {
-                toastr.error('请输入带宽')
-                return false;
-            }
-            return true;
-        }
 
         window.onload = function () {
             //设置年份的选择

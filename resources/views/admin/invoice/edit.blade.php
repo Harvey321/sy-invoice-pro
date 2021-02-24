@@ -20,6 +20,15 @@
                                    onkeyup="this.value=this.value.trim()" disabled>
 {{--                            in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'--}}
                         </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">序号:</label>
+                            <input type="text" id="num" name="num" value="{{$data->num}}"
+                                   class="form-control" placeholder="请输入序号" maxlength="100"
+                                   onkeyup="this.value=this.value.trim()" disabled>
+                            {{--                            in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'--}}
+                        </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">开票公司:</label>
                             <select name="invoice_company" id="invoice_company" class="form-control" disabled>
@@ -34,7 +43,7 @@
                             <select name="uid" id="uid"
                                     class="form-control" {{in_array('App\Http\Controllers\Admin\RoleController@delete',session()->get('permission'))?'':'disabled'}}>
                                 @foreach($user as $item)
-                                    <option value="{{$item->id}}"{{$item->id == $data->uid ?'selected':''}}>
+                                    <option value="{{$item->id.'-'.$item->username}}"{{$item->id == $data->uid ?'selected':''}}>
                                         {{$item->username}}
                                     </option>
                                 @endforeach
@@ -160,7 +169,13 @@
     <script>
         function dataUpdate(id) {
             let data = $('form').serializeArray();
+            let user = data[1]['value'];
+            let users = user.split('-');
+
             data.push({name:'crm_id',value:$('#crm_id').val()})
+            data.push({name:'uid',value:users[0]})
+            data.push({name:'u_name',value:users[1]})
+            data.splice(1,1);
 
             $.ajax({
                 type: "post",
