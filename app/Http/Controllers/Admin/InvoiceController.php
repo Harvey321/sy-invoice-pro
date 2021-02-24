@@ -391,16 +391,16 @@ class InvoiceController extends Controller
                             }
                             $obj = new Invoice();
                             $obj->num = trim($item['num'], "\t");
-                            $obj->invoice_company = trim($item['invoice_company'], "\t");
+//                            $obj->invoice_company = trim($item['invoice_company'], "\t");
                             switch (trim($item['invoice_company'], "\t")) {
                                 case '上海双于通信技术有限公司':
-                                    $obj->status = 10;
+                                    $obj->invoice_company = 10;
                                     break;
                                 case '深圳是方科技有限公司':
-                                    $obj->status = 20;
+                                    $obj->invoice_company = 20;
                                     break;
                                 case '江西双格科技有限公司':
-                                    $obj->status = 30;
+                                    $obj->invoice_company = 30;
                                     break;
                             }
 
