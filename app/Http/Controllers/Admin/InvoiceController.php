@@ -47,6 +47,20 @@ class InvoiceController extends Controller
             $data['num'] = $request->all()['num'];
         }
 
+        if (isset($request->all()['collection'])) {
+            //已收款
+            if ($request->all()['collection'] == 10) {
+                $query->where('collection', '!=','');
+                $data['collection'] = $request->all()['collection'];
+            }
+            //未收款
+            if ($request->all()['collection'] == 20) {
+                $query->where('collection', '');
+                $data['collection'] = $request->all()['collection'];
+            }
+        }
+
+
         if (isset($request->all()['tax_num'])) {
             $query->where('tax_num', $request->all()['tax_num']);
             $data['tax_num'] = $request->all()['tax_num'];
@@ -281,8 +295,6 @@ class InvoiceController extends Controller
 //            $value['uid'] = $username;//直接用uid替换成业务员名字放到excl中显示
 
 
-
-
             $value['ticket_month'] = date('Y-m', $value['ticket_month']);
 
             switch ($value['status']) {
@@ -449,7 +461,7 @@ class InvoiceController extends Controller
                         }
 
                     });
-                    return json_encode(['status'=>'success','data'=>$res]);
+                    return json_encode(['status' => 'success', 'data' => $res]);
                 }
 
             } else {

@@ -44,8 +44,9 @@
                             <form action="/" method="get" enctype="multipart/form-data">
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="input-group date d-flex flex-row align-items-center col-3"
+                                         style="padding-right:30px;"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin-right:20px;">开票公司:</label>
+                                        <label style="margin:auto 5px auto 0;">开票公司:</label>
                                         <select name="invoice_company" id="invoice_company" class="form-control">
                                             <option value="10" {{$data['invoice_company'] == 10 ? 'selected':''}}>
                                                 上海双于通信技术有限公司
@@ -58,27 +59,46 @@
                                             </option>
                                         </select>
                                     </div>
-{{--                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"--}}
-{{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
-{{--                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>--}}
-{{--                                        <input type="text" id="crm_id" name="crm_id"--}}
-{{--                                               value="{{isset($data['crm_id'])? $data['crm_id']:''}}"--}}
-{{--                                               class="form-control" placeholder="请输入crmID" maxlength="100"--}}
-{{--                                               onkeyup="this.value=this.value.trim()">--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"--}}
+                                    {{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
+                                    {{--                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>--}}
+                                    {{--                                        <input type="text" id="crm_id" name="crm_id"--}}
+                                    {{--                                               value="{{isset($data['crm_id'])? $data['crm_id']:''}}"--}}
+                                    {{--                                               class="form-control" placeholder="请输入crmID" maxlength="100"--}}
+                                    {{--                                               onkeyup="this.value=this.value.trim()">--}}
+                                    {{--                                    </div>--}}
 
-                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"
+                                    <div class="input-group date d-flex flex-row align-items-center col-3"
+                                         style="padding-right:30px;"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin-right:20px;">序号:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <label style="margin:auto 5px auto 0;">序&nbsp;&nbsp;号:</label>
                                         <input type="text" id="num" name="num"
                                                value="{{isset($data['num'])? $data['num']:''}}"
                                                class="form-control" placeholder="请输入序号" maxlength="100"
                                                onkeyup="this.value=this.value.trim()">
                                     </div>
 
-                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"
+                                    <div class="input-group date d-flex flex-row align-items-center col-3"
+                                         style="padding-right:30px;"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin-right:20px;">税&nbsp;&nbsp;号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <label style="margin:auto 5px auto 0;">是否收款:</label>
+                                        <select name="collection" id="collection" class="form-control">
+                                            <option value="">--请选择--</option>
+                                            {{--                                                selected disabled style="display: none;"--}}
+                                            <option value="10" {{isset($data['collection']) ?$data['collection'] == 10 ? 'selected':'':'' }}>
+                                                已收款
+                                            </option>
+                                            <option value="20" {{isset($data['collection']) ?$data['collection'] == 20 ? 'selected':'':'' }}>
+                                                未收款
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="input-group date d-flex flex-row align-items-center col-3"
+                                         style="padding-right:30px;"
+                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                        <label style="margin:auto 5px auto 0;">税&nbsp;&nbsp;号:</label>
                                         <input type="text" id="tax_num" name="tax_num"
                                                value="{{isset($data['tax_num'])? $data['tax_num']:''}}"
                                                class="form-control" placeholder="请输入税号" maxlength="100"
@@ -89,7 +109,7 @@
                                     <div class="col-7">
                                         <div class="input-group date d-flex flex-row align-items-center"
                                              id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                            <label style="margin-right:20px;">查询范围:</label>
+                                            <label style="margin:auto 5px auto 0;">查询范围:</label>
                                             <input class='input-group date form-control datetimepicker-input input-group-append'
                                                    placeholder="请输入开票月份" style="width: 250px!important;"
                                                    type="month" name="month_old" id="month_old"
@@ -142,14 +162,14 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-{{--                                    <th>crmID</th>--}}
+                                    {{--                                    <th>crmID</th>--}}
                                     <th>序号</th>
                                     <th class="none">开票公司</th>
-                                    <th>业务员名</th>
+                                    <th class="none">业务员名</th>
                                     <th>公司名</th>
                                     <th>开票名</th>
                                     <th>税号</th>
-                                    <th>地址/电话</th>
+                                    <th class="none">地址/电话</th>
                                     <th>开户行/账户</th>
                                     <th>金额</th>
                                     <th class="none">发票类型</th>
@@ -161,7 +181,7 @@
                                     <th class="none">状态</th>
                                     <th>备注</th>
                                     {{--                                    <th>创建时间</th>--}}
-                                    <th class="none">操作</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -169,7 +189,7 @@
                                 @foreach($data['dataList'] as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
-{{--                                        <td>{{$item->crm_id}}</td>--}}
+                                        {{--                                        <td>{{$item->crm_id}}</td>--}}
                                         <td>{{$item->num}}</td>
                                         <td>
                                             {{$item->invoice_company == '10'?'上海双于通信技术有限公司':''}}
@@ -291,7 +311,7 @@
                 processData: false,
                 success: function (data) {
                     if (data.status === 'success') {
-                        if(data.data == 0){
+                        if (data.data == 0) {
                             alert("导入成功,暂无需要增加条目");
                         }
                         alert("导入成功" + data.data + '条');
