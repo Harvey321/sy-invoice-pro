@@ -148,7 +148,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['isL
 
     Route::any('/invoice/uploadFile', 'InvoiceController@uploadFile');//导入发票文件
 
-
+    Route::any('/invoice/signRead', 'InvoiceController@signRead');//标记已读
 
 
 

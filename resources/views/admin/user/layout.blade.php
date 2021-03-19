@@ -54,6 +54,86 @@
     .custom-file-label:after {
         content: '上传文件' !important;
     }
+
+    .yuandian {
+        margin-left: 10px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: red;
+        display: block
+    }
+
+    .notices {
+        position: relative;
+        height: 30px;
+        width: 50px;
+    }
+
+    .notice-box {
+        color: white;
+        width: 500px;
+        max-height: 280px;
+        min-height: 0;
+        border: 2px solid #17a2b8;
+        border-radius: 8px;
+        overflow: hidden;
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        opacity: 0;
+        transition: all 0.5s;
+        transition-timing-function: ease-in;
+        visibility: hidden;
+    }
+
+    .notice-box-list-title {
+        width: 500px;
+        height: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: darkgrey;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .notices:hover .notice-box {
+        opacity: 1 !important;
+        visibility: visible;
+
+    }
+
+    .notice-box-lists {
+        width: 500px;
+        min-height: 0;
+        max-height: 250px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .notice-box-list {
+        background-color: #17a2b8;
+        width: 500px;
+        height: 49px;
+        border-top: 1px solid white;
+        font-size: 12px;
+        padding-left: 10px;
+    }
+
+    .notice-box-list:hover {
+        background-color: rgb(60, 182, 204);
+    }
+
+
+    .a-read {
+        color: white;
+    }
+
+    .a-read:hover {
+        color: black;
+    }
+
+
 </style>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -65,7 +145,44 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto" style="align-items: center">
+        <ul class="navbar-nav ml-auto" style="align-items: center;cursor: pointer;">
+            @if(isset($data['noticeListSign']))
+                <li class="nav-item dropdown d-flex flex-column justify-content-center  align-items-center notices">
+                    @if( $data['noticeListSign'] == 1 ? false : true)
+                        <i class="yuandian"></i>
+                    @endif
+                    <i class="far fa-bell notices-sign"></i>
+
+                    <div class="notice-box">
+                        <div class="notice-box-list-title d-flex flex-row justify-content-between align-items-center "
+                             style="background-color: #17a2b8!important;">
+                            <div>
+                                消息通知
+                            </div>
+                            @if( $data['noticeListSign'] == 1 ? false : true)
+                                <div style="font-weight: 100;font-size: 13px;">
+                                    <a class="a-read" href="javascript:;" onclick="signRead()">标为已读</a>
+                                </div>
+                            @endif
+
+                        </div>
+                        <div class="notice-box-lists">
+                            @foreach($data['noticeList'] as $item)
+                                <div class="notice-box-list d-flex flex-column justify-content-center align-items-start">
+                                    <div style="font-size: 14px;">
+                                        {{$item->money}}
+                                    </div>
+                                    <div style="font-size: 9px;">
+                                        {{$item->created_at}}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </li>
+            @endif
+
+
             <li class="nav-item dropdown">
                 <a href="/admin/loginOut" class=" btn btn-default  btn-sm">
                     登出
@@ -236,17 +353,17 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-{{--                                    <i class="far fa-circle nav-icon"></i>--}}
+                                    {{--                                    <i class="far fa-circle nav-icon"></i>--}}
                                     <i class="fas fa-circle nav-icon"></i>
                                     <p>
                                         查看发票
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-{{--                                <a href="/admin/invoice" class="nav-link">--}}
-{{--                                    <i class="far fa-circle nav-icon"></i>--}}
-{{--                                    <p>查看发票</p>--}}
-{{--                                </a>--}}
+                                {{--                                <a href="/admin/invoice" class="nav-link">--}}
+                                {{--                                    <i class="far fa-circle nav-icon"></i>--}}
+                                {{--                                    <p>查看发票</p>--}}
+                                {{--                                </a>--}}
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="/admin/invoice?invoice_company=10" class="nav-link">
@@ -352,6 +469,28 @@
     $(document).ready(function () {
         bsCustomFileInput.init();
     });
+
+    function signRead() {
+
+        $.ajax({
+            type: "get",
+            url: "/admin/invoice/signRead",
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 1) {
+                    toastr.info(data.message)
+                    timeOut(window.location);
+                }
+                if (data.status == 0) {
+                    toastr.error(data.message)
+                    timeOut(window.location);
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    }
 
 </script>
 </body>

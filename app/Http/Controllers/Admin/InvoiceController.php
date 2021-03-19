@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\MailController;
 use App\Model\Admin\Role;
 use App\Model\Admin\User;
+use App\Model\CollectionNotice;
 use App\Model\Invoice;
 use App\Model\InvoicePro;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class InvoiceController extends Controller
         if (isset($request->all()['collection'])) {
             //已收款
             if ($request->all()['collection'] == 10) {
-                $query->where('collection', '!=','');
+                $query->where('collection', '!=', '');
                 $data['collection'] = $request->all()['collection'];
             }
             //未收款
@@ -80,8 +81,24 @@ class InvoiceController extends Controller
 
         $data['title'] = '发票列表';
 
+        //发票通知
+        $data['noticeList'] = CollectionNotice::all();
+        $data['noticeListSign'] = 1;
+        foreach ($data['noticeList'] as $item) {
+            if ($item->status == 20) {
+                $data['noticeListSign'] = 0;
+            }
+        }
+
         return view('admin.invoice.index', ['data' => $data]);
     }
+
+    public function signRead()
+    {
+        $res = CollectionNotice::where(['status' => 20])->update(['status' => 10]);
+        return ['status' => 1, 'message' => '您已阅读通知'];
+    }
+
 
     /**
      * 发票添加页面
@@ -226,6 +243,19 @@ class InvoiceController extends Controller
                     return ['status' => 0, 'message' => '发票修改失败'];
                 }
             }
+        }
+
+        $invoiceList = Invoice::where('id', $formData['id'])->first();
+
+        //如果修改的金额不等于空 并且与之前不同 则添加金额修改通知
+        if ($formData['collection'] != $invoiceList->collection && $formData['collection'] != '') {
+            $obj = new CollectionNotice();
+            $obj->iid = $formData['id'];
+            $obj->money = ($formData['num'] == null ? '记录id号为' . $formData['id'] : '序号:' . $formData['num']) .
+                '&nbsp;&nbsp;' . $formData['company_name'] . '&nbsp;&nbsp;' .
+                '收款金额:' . $formData['collection'] . '元'; //序号xxxx xxx公司 修改收款金额
+            $obj->status = 20;
+            $obj->save();
         }
 
         Invoice::where('id', $formData['id'])->update($formData);

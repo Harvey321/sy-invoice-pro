@@ -173,6 +173,7 @@
             let users = user.split('-');
 
             data.push({name:'crm_id',value:$('#crm_id').val()})
+            data.push({name:'num',value:$('#num').val()})
             data.push({name:'uid',value:users[0]})
             data.push({name:'u_name',value:users[1]})
             data.splice(1,1);

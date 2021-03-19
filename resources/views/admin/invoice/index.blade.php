@@ -43,22 +43,22 @@
                         <div class="card-header">
                             <form action="/" method="get" enctype="multipart/form-data">
                                 <div class="row" style="margin-bottom: 20px;">
-                                    <div class="input-group date d-flex flex-row align-items-center col-3"
-                                         style="padding-right:30px;"
-                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin:auto 5px auto 0;">开票公司:</label>
-                                        <select name="invoice_company" id="invoice_company" class="form-control">
-                                            <option value="10" {{$data['invoice_company'] == 10 ? 'selected':''}}>
-                                                上海双于通信技术有限公司
-                                            </option>
-                                            <option value="20" {{$data['invoice_company'] == 20 ? 'selected':''}}>
-                                                深圳是方科技有限公司
-                                            </option>
-                                            <option value="30" {{$data['invoice_company'] == 30 ? 'selected':''}}>
-                                                江西双格科技有限公司
-                                            </option>
-                                        </select>
-                                    </div>
+{{--                                    <div class="input-group date d-flex flex-row align-items-center col-3"--}}
+{{--                                         style="padding-right:30px;"--}}
+{{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
+{{--                                        <label style="margin:auto 5px auto 0;">开票公司:</label>--}}
+{{--                                        <select name="invoice_company" id="invoice_company" class="form-control">--}}
+{{--                                            <option value="10" {{$data['invoice_company'] == 10 ? 'selected':''}}>--}}
+{{--                                                上海双于通信技术有限公司--}}
+{{--                                            </option>--}}
+{{--                                            <option value="20" {{$data['invoice_company'] == 20 ? 'selected':''}}>--}}
+{{--                                                深圳是方科技有限公司--}}
+{{--                                            </option>--}}
+{{--                                            <option value="30" {{$data['invoice_company'] == 30 ? 'selected':''}}>--}}
+{{--                                                江西双格科技有限公司--}}
+{{--                                            </option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
                                     {{--                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"--}}
                                     {{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
                                     {{--                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>--}}
@@ -78,6 +78,20 @@
                                                onkeyup="this.value=this.value.trim()">
                                     </div>
 
+
+
+
+                                    <div class="input-group date d-flex flex-row align-items-center col-3"
+                                         style="padding-right:30px;"
+                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
+                                        <label style="margin:auto 5px auto 0;">税&nbsp;&nbsp;号:</label>
+                                        <input type="text" id="tax_num" name="tax_num"
+                                               value="{{isset($data['tax_num'])? $data['tax_num']:''}}"
+                                               class="form-control" placeholder="请输入税号" maxlength="100"
+                                               onkeyup="this.value=this.value.trim()">
+                                    </div>
+
+
                                     <div class="input-group date d-flex flex-row align-items-center col-3"
                                          style="padding-right:30px;"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
@@ -92,17 +106,6 @@
                                                 未收款
                                             </option>
                                         </select>
-                                    </div>
-
-
-                                    <div class="input-group date d-flex flex-row align-items-center col-3"
-                                         style="padding-right:30px;"
-                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin:auto 5px auto 0;">税&nbsp;&nbsp;号:</label>
-                                        <input type="text" id="tax_num" name="tax_num"
-                                               value="{{isset($data['tax_num'])? $data['tax_num']:''}}"
-                                               class="form-control" placeholder="请输入税号" maxlength="100"
-                                               onkeyup="this.value=this.value.trim()">
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 20px;">
@@ -164,13 +167,13 @@
                                     <th>ID</th>
                                     {{--                                    <th>crmID</th>--}}
                                     <th>序号</th>
-                                    <th class="none">开票公司</th>
+                                    <th>开票公司</th>
                                     <th class="none">业务员名</th>
                                     <th>公司名</th>
-                                    <th>开票名</th>
-                                    <th>税号</th>
+                                    <th class="none">开票名</th>
+                                    <th class="none">税号</th>
                                     <th class="none">地址/电话</th>
-                                    <th>开户行/账户</th>
+                                    <th class="none">开户行/账户</th>
                                     <th>金额</th>
                                     <th class="none">发票类型</th>
                                     <th class="none">快递信息</th>
