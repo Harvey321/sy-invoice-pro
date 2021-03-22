@@ -210,6 +210,10 @@ class InvoiceController extends Controller
             $formData['ticket_month'] = strtotime($formData['ticket_month']);
         }
 
+        if ($formData['collection'] == null){
+            $formData['collection'] = '';
+        }
+
         //如果没有设置crmid 那就是修改对应id的单条的备注信息
         if (!isset($formData['crm_id'])) {
             $res = Invoice::where('id', $formData['id'])->update($formData);//更新单条

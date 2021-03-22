@@ -171,6 +171,9 @@
             let data = $('form').serializeArray();
             let user = data[1]['value'];
             let users = user.split('-');
+            if ($('#collection').val() == null){
+                $('#collection').val('')
+            }
 
             data.push({name:'crm_id',value:$('#crm_id').val()})
             data.push({name:'num',value:$('#num').val()})
