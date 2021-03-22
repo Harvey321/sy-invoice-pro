@@ -59,6 +59,8 @@ class InvoiceController extends Controller
                 $query->where('collection', '');
                 $data['collection'] = $request->all()['collection'];
             }
+        }else{
+            $data['collection'] = 20;//默认值 未收款
         }
 
 

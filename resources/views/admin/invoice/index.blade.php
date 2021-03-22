@@ -43,22 +43,22 @@
                         <div class="card-header">
                             <form action="/" method="get" enctype="multipart/form-data">
                                 <div class="row" style="margin-bottom: 20px;">
-{{--                                    <div class="input-group date d-flex flex-row align-items-center col-3"--}}
-{{--                                         style="padding-right:30px;"--}}
-{{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
-{{--                                        <label style="margin:auto 5px auto 0;">开票公司:</label>--}}
-{{--                                        <select name="invoice_company" id="invoice_company" class="form-control">--}}
-{{--                                            <option value="10" {{$data['invoice_company'] == 10 ? 'selected':''}}>--}}
-{{--                                                上海双于通信技术有限公司--}}
-{{--                                            </option>--}}
-{{--                                            <option value="20" {{$data['invoice_company'] == 20 ? 'selected':''}}>--}}
-{{--                                                深圳是方科技有限公司--}}
-{{--                                            </option>--}}
-{{--                                            <option value="30" {{$data['invoice_company'] == 30 ? 'selected':''}}>--}}
-{{--                                                江西双格科技有限公司--}}
-{{--                                            </option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="input-group date d-flex flex-row align-items-center col-3"--}}
+                                    {{--                                         style="padding-right:30px;"--}}
+                                    {{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
+                                    {{--                                        <label style="margin:auto 5px auto 0;">开票公司:</label>--}}
+                                    {{--                                        <select name="invoice_company" id="invoice_company" class="form-control">--}}
+                                    {{--                                            <option value="10" {{$data['invoice_company'] == 10 ? 'selected':''}}>--}}
+                                    {{--                                                上海双于通信技术有限公司--}}
+                                    {{--                                            </option>--}}
+                                    {{--                                            <option value="20" {{$data['invoice_company'] == 20 ? 'selected':''}}>--}}
+                                    {{--                                                深圳是方科技有限公司--}}
+                                    {{--                                            </option>--}}
+                                    {{--                                            <option value="30" {{$data['invoice_company'] == 30 ? 'selected':''}}>--}}
+                                    {{--                                                江西双格科技有限公司--}}
+                                    {{--                                            </option>--}}
+                                    {{--                                        </select>--}}
+                                    {{--                                    </div>--}}
                                     {{--                                    <div class="input-group date d-flex flex-row align-items-center col-3 offset-1"--}}
                                     {{--                                         id="reservationdate-month" data-date-format="yyyy-mm-dd">--}}
                                     {{--                                        <label style="margin-right:20px;">CrmId:&nbsp;&nbsp;&nbsp;&nbsp;</label>--}}
@@ -79,8 +79,6 @@
                                     </div>
 
 
-
-
                                     <div class="input-group date d-flex flex-row align-items-center col-3"
                                          style="padding-right:30px;"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
@@ -95,10 +93,21 @@
                                     <div class="input-group date d-flex flex-row align-items-center col-3"
                                          style="padding-right:30px;"
                                          id="reservationdate-month" data-date-format="yyyy-mm-dd">
-                                        <label style="margin:auto 5px auto 0;">是否收款:</label>
-                                        <select name="collection" id="collection" class="form-control">
+                                        <label style="margin:auto 5px auto 0;">是否收款:
+                                        @if(isset($data['collection']) ?$data['collection'] == 10 ? true:'':'')
+                                            <button class="btn btn-info button-left-margin" onclick="setCollection(20)"
+                                                    style="width: 110px;height: 38px;">已收款
+                                            </button>
+                                        @endif
+                                        @if(isset($data['collection']) ?$data['collection'] == 20 ? true:'':'')
+                                            <button class="btn btn-outline-info button-left-margin" onclick="setCollection(10)"
+                                                    style="width: 110px;height: 38px;">未收款
+                                            </button>
+                                        @endif
+                                        </label>
+                                        <select name="collection" id="collection" class="form-control" hidden>
                                             <option value="">--请选择--</option>
-                                            {{--                                                selected disabled style="display: none;"--}}
+                                                                                            selected disabled style="display: none;"
                                             <option value="10" {{isset($data['collection']) ?$data['collection'] == 10 ? 'selected':'':'' }}>
                                                 已收款
                                             </option>
@@ -505,6 +514,12 @@
             // $(obj).children('span').html($(object).val());//表单失焦时 表单值赋值给span
             $(obj).children('input').css('display', 'none');//表单消失
             $(obj).children('span').css('display', 'block');//span出现
+        }
+
+        //是否收款
+        function setCollection(collection) {
+            $('#collection').val(collection)
+            console.log($('#collection').val())
         }
 
 
